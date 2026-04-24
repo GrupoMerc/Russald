@@ -25,7 +25,7 @@ export default function HomeHero() {
     >
       {/* Background clinic photo at 30% opacity */}
       <Image
-        src="/photos/hero-clinic.jpg"
+        src="/photos/hero-clinic.webp"
         alt={altText.heroClinic}
         fill
         priority
