@@ -2,21 +2,31 @@
  * Image optimization pipeline for Figma exports.
  *
  * Usage:
- *   npm run img
+ *   npm run img                       → outputs to public/photos/raw/../  (same raw/ parent)
+ *   npm run img -- --out src/components/sections/HomeHero
  *
- * Drop raw exports from Figma into public/photos/raw/
- * This script converts them to WebP, resizes to max 1440px width,
- * and outputs to public/photos/ — only those files get committed.
+ * Workflow:
+ *   1. Drop Figma exports into public/photos/raw/  (gitignored)
+ *   2. Run npm run img
+ *   3. Move the .webp output to the component folder that uses it
+ *      e.g. src/components/sections/HomeHero/hero-clinic.webp
+ *   4. Import statically: import heroClinic from './hero-clinic.webp'
+ *   5. Commit only the .webp — never the raw/ folder
  */
 
 import sharp from 'sharp'
-import { readdir, stat } from 'node:fs/promises'
+import { readdir, stat, mkdir } from 'node:fs/promises'
 import { join, parse } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT    = fileURLToPath(new URL('..', import.meta.url))
 const RAW_DIR = join(ROOT, 'public', 'photos', 'raw')
-const OUT_DIR = join(ROOT, 'public', 'photos')
+
+// --out flag overrides output directory
+const outFlagIdx = process.argv.indexOf('--out')
+const OUT_DIR = outFlagIdx !== -1
+  ? join(ROOT, process.argv[outFlagIdx + 1])
+  : join(ROOT, 'public', 'photos')
 
 // Max width per filename prefix — add entries as needed
 const MAX_WIDTH = {
@@ -55,7 +65,8 @@ async function run() {
     return
   }
 
-  console.log(`\nOptimizing ${images.length} image(s)...\n`)
+  await mkdir(OUT_DIR, { recursive: true })
+  console.log(`\nOptimizing ${images.length} image(s) → ${OUT_DIR}\n`)
 
   for (const file of images) {
     const { name } = parse(file)
@@ -73,7 +84,7 @@ async function run() {
     console.log(`  ✓  ${name}.webp   ${kb(inSize)} → ${kb(outSize)}  (${saved}% smaller)`)
   }
 
-  console.log('\nDone. Commit the files in public/photos/ — raw/ stays gitignored.\n')
+  console.log(`\nDone. Move .webp files to your component folder, then commit. raw/ stays gitignored.\n`)
 }
 
 run()
