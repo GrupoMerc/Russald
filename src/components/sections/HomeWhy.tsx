@@ -39,7 +39,7 @@ export default function HomeWhy() {
             className="flex-1 flex flex-col gap-4 sm:justify-between sm:gap-3 px-5 py-7 sm:px-10 sm:py-11 rounded-[16px]"
             style={{
               backgroundImage:
-                'linear-gradient(39deg, rgb(15,28,63) 39.7%, rgb(29,86,196) 110.4%)',
+                'linear-gradient(36deg, rgb(48,137,226) 39.645%, rgb(255,255,255) 110.36%)',
             }}
           >
             {/* Label */}
@@ -59,7 +59,7 @@ export default function HomeWhy() {
             </h2>
 
             {/* Body */}
-            <p className="font-['Nunito_Sans',sans-serif] font-normal text-white/70 text-[0.8125rem] sm:text-[0.84375rem] leading-[1.75]">
+            <p className="font-['Nunito_Sans',sans-serif] font-normal text-white/[0.68] text-[0.8125rem] sm:text-[0.84375rem] leading-[1.75]">
               There are many medical facilities in Tijuana. What defines Russald Medical Center is not
               just pricing: it is the combination of clinical rigor, patient coordination
               infrastructure, and a genuine commitment to outcomes that keeps international patients
@@ -85,8 +85,8 @@ export default function HomeWhy() {
             </div>
 
             {/* Unmatched Accessibility — featured accent card */}
-            <div className="bg-[var(--color-white)] border border-[var(--color-blue-action)] border-t-[3px] rounded-[12px] flex flex-col gap-2 px-5 sm:px-6 py-6 sm:py-7">
-              <p className="font-['Rethink_Sans',sans-serif] font-extrabold text-[var(--color-blue-action)] text-[0.9375rem] sm:text-[1rem]">
+            <div className="bg-[var(--color-white)] border border-[var(--color-blue)] border-t-[3px] rounded-[12px] flex flex-col gap-2 px-5 sm:px-6 py-6 sm:py-7">
+              <p className="font-['Rethink_Sans',sans-serif] font-extrabold text-[var(--color-blue)] text-[0.9375rem] sm:text-[1rem]">
                 Unmatched Accessibility
               </p>
               <p className="font-['Nunito_Sans',sans-serif] font-normal text-[var(--color-muted)] text-[0.8125rem] leading-[1.7]">
