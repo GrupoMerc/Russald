@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy:        #0F1C3F;
+  --color-charcoal:    #0F172A;
+  --color-blue:        #3089E2;
+  --color-blue-action: #2563EB;
+  --color-blue-light:  #93C5FD;
+  --color-gold:        #B5862A;
+  --color-muted:       #64748B;
+  --color-border:      #E2E8F0;
+  --color-white:       #FFFFFF;
+  --color-ice:         #F8FAFC;
+
+  --font-display: 'Rethink Sans', sans-serif;
+  --font-body:    'Nunito Sans', sans-serif;
+
+  --radius-btn:  50px;
+  --radius-card: 12px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-blue-action);
+  outline-offset: 2px;
+}
+
