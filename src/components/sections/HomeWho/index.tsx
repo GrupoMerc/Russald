@@ -1,6 +1,8 @@
 // Figma node: 2298:721 — Section/Home-Who · 2330:1076 Tablet · 2337:1721 Mobile
-
+import Image from 'next/image'
 import Button from '@/components/ui/Button'
+import { altText } from '@/lib/altText'
+import clinicInterior from './clinic-interior.webp'
 
 const STATS = [
   { value: '25+',     label: 'PROCEDURES AVAILABLE' },
@@ -22,16 +24,16 @@ export default function HomeWho() {
 
         {/* Section header */}
         <div className="flex flex-col items-center gap-[10px]">
-          <p className="font-['Nunito_Sans',sans-serif] font-semibold text-[var(--color-blue)] text-[0.65625rem] tracking-[1.89px] uppercase text-center">
+          <p className="font-['Nunito_Sans',sans-serif] font-semibold text-[var(--color-navy)] text-[0.65625rem] tracking-[1.89px] uppercase text-center">
             WHO WE ARE
           </p>
           <h2
             id="who-heading"
-            className="font-['Rethink_Sans',sans-serif] font-bold text-[var(--color-blue-action)] text-center text-[1.5rem] leading-[1.75rem] sm:text-[1.875rem] sm:leading-[2.125rem]"
+            className="font-['Rethink_Sans',sans-serif] font-bold text-[var(--color-blue)] text-center text-[1.5rem] leading-[1.75rem] sm:text-[1.875rem] sm:leading-[2.125rem]"
           >
             A Different Kind of Medical Center
           </h2>
-          <div className="w-9 h-[3px] rounded-[2px] bg-[var(--color-blue)]" aria-hidden="true" />
+          <div className="w-9 h-[3px] rounded-[2px] bg-[var(--color-navy)]" aria-hidden="true" />
         </div>
 
         {/* Stats bar — vertical on mobile, horizontal on sm+ */}
@@ -45,13 +47,13 @@ export default function HomeWho() {
               key={stat.label}
               role="listitem"
               className={[
-                'flex-1 flex flex-col items-center gap-1 px-4 py-5 bg-[var(--color-white)]',
+                'flex-1 flex flex-col items-center gap-1 px-4 py-4 sm:py-5 bg-[var(--color-white)]',
                 i < STATS.length - 1
                   ? 'border-b sm:border-b-0 sm:border-r border-[var(--color-border)]'
                   : '',
               ].join(' ')}
             >
-              <span className="font-['Rethink_Sans',sans-serif] font-bold text-[var(--color-navy)] text-[1.375rem] sm:text-[1.75rem] leading-snug">
+              <span className="font-['Rethink_Sans',sans-serif] font-bold text-[var(--color-blue)] text-[1.375rem] sm:text-[1.75rem] leading-snug">
                 {stat.value}
               </span>
               <span className="font-['Nunito_Sans',sans-serif] font-semibold text-[var(--color-muted)] text-[0.625rem] tracking-[0.8px] uppercase">
@@ -91,16 +93,16 @@ export default function HomeWho() {
             </div>
           </div>
 
-          {/* Photo placeholder — replace with <Image> when CM3 clinic photo is ready */}
-          <div
-            className="shrink-0 w-full lg:w-[458px] h-[269px] sm:h-[344px] rounded-[12px] sm:rounded-[16px]"
-            style={{
-              backgroundImage:
-                'linear-gradient(37deg, rgb(200,216,240) 39.7%, rgb(216,230,248) 75%, rgb(192,212,238) 110.4%)',
-            }}
-            role="img"
-            aria-label="Clinic interior — Russald Medical Center, Tijuana"
-          />
+          {/* Clinic interior photo */}
+          <div className="shrink-0 w-full lg:w-[458px] h-[269px] sm:h-[344px] rounded-[12px] sm:rounded-[16px] overflow-hidden relative">
+            <Image
+              src={clinicInterior}
+              alt={altText.clinicInteriorCm3}
+              fill
+              sizes="(max-width: 1024px) 100vw, 458px"
+              className="object-cover"
+            />
+          </div>
 
         </div>
       </div>
