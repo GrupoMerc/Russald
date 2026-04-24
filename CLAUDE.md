@@ -1,32 +1,411 @@
 # Russald Medical — CLAUDE.md
 > Fuente de verdad para Claude en VSCode. Leer completo antes de generar cualquier código.
 
-## Proyecto
-- **Sitio:** https://russaldmedical.com
-- **Repo:** github.com/GrupoMerc/Russald
-- **Deploy:** Vercel (auto-deploy push a main)
-- **Stack:** Next.js 15 · App Router · Tailwind CSS v4 · TypeScript strict · Framer Motion
+---
 
-## Figma — fuente de verdad visual
-**URL:** https://www.figma.com/design/aJSYRFsGTo30GNSYrtrw1u/Rusald-Medical
+## 1. Proyecto
+
+| Campo | Valor |
+|---|---|
+| Sitio | https://russaldmedical.com |
+| Repo | github.com/GrupoMerc/Russald |
+| Deploy | Vercel (auto-deploy push a `main`) |
+| Stack | Next.js 15 · App Router · Tailwind CSS v4 · TypeScript strict · Framer Motion |
+| Equipo | 2 personas — Joe + Claude |
+
+---
+
+## 2. Figma — fuente de verdad visual
+
+**URL:** https://www.figma.com/design/aJSYRFsGTo30GNSYrtrw1u/Rusald-Medical  
 **File key:** `aJSYRFsGTo30GNSYrtrw1u`
 
 ### Regla absoluta
-Cada componente React mapea 1:1 a un node de Figma.
-No crear, renombrar ni inventar componentes sin node ID de referencia.
-Agregar el node ID como comentario en la línea 1 de cada componente:
+- Cada componente React mapea 1:1 a un node de Figma.
+- No crear, renombrar ni inventar componentes sin node ID de referencia.
+- Agregar el node ID como comentario en la línea 1 de cada componente:
 ```tsx
-// Figma node: 2300:705 — Section/Home-Hero
+// Figma node: 2300:705 — Section/Home-Hero · 2323:975 Tablet · 2334:1555 Mobile
 ```
 
-### Cómo extraer un componente del Figma
-1. Llamar `get_design_context` con Desktop node ID
-2. Llamar `get_design_context` con Tablet node ID  
-3. Llamar `get_design_context` con Mobile node ID
-4. Generar UN solo componente .tsx con las 3 variantes via Tailwind responsive
-5. Nunca crear 3 archivos separados por breakpoint
+### Cómo extraer un componente
+1. `get_design_context` Desktop → Tablet → Mobile (3 llamadas en paralelo)
+2. Generar **un solo** `.tsx` con las 3 variantes via Tailwind responsive
+3. Nunca crear 3 archivos separados por breakpoint
+4. Adaptar al stack del proyecto — los tokens Figma → `var(--color-*)`, fuentes → variables CSS
 
-## Tabla de Node IDs — completa y verificada
+---
+
+## 3. Arquitectura de componentes
+
+### Regla de oro: estructura separada de contenido
+
+Los componentes son **moldes visuales**. El contenido va en archivos de datos separados.
+
+```
+❌ Mal — contenido hardcodeado en el componente
+export default function WlsHero() {
+  return <h1>Life-Changing Weight Loss Surgery...</h1>
+}
+
+✅ Bien — componente recibe props, datos en lib/pages/
+export default function SpecHero({ data }: { data: SpecHeroData }) {
+  return <h1>{data.heading}</h1>
+}
+```
+
+### Tres tipos de componentes
+
+| Tipo | Ubicación | Cuándo usarlo |
+|---|---|---|
+| **Átomo UI** | `components/ui/` | Button, Input, Select, Card — sin lógica de negocio |
+| **Template de sección** | `components/sections/spec/` | Layouts reutilizables entre páginas internas |
+| **Sección única** | `components/sections/` | Secciones exclusivas de una sola página (Home-Hero, Bio-Breaker) |
+
+### Páginas internas — patrón obligatorio
+
+Todas las páginas de especialidad (Weight Loss, Plastic Surgery, etc.) comparten el mismo layout de secciones: SpecHero → SpecFactsStrip → SpecIntro → SpecWhy → SpecProc → EvalFormSection.
+
+```
+components/sections/spec/
+  SpecHero.tsx          ← template genérico, acepta SpecHeroData
+  SpecFactsStrip.tsx    ← template genérico, acepta SpecFactData[]
+  SpecIntro.tsx         ← template genérico, acepta SpecIntroData
+  SpecWhy.tsx           ← template genérico, acepta SpecWhyItem[]
+  SpecProc.tsx          ← template genérico, acepta SpecProcItem[]
+  SpecFloatCta.tsx      ← reutilizable sin props
+
+lib/pages/
+  weightLoss.ts         ← export const wlsData: SpecPageData
+  plasticSurgery.ts     ← export const plasticData: SpecPageData
+  hairRestoration.ts    ← export const hairData: SpecPageData
+
+app/
+  weight-loss/page.tsx  ← import { wlsData } + templates = 15 líneas
+  plastic-surgery/page.tsx
+```
+
+**Beneficio:** una segunda página interna se crea en < 1 hora. Un cambio de estilo se aplica en todas a la vez.
+
+---
+
+## 4. TypeScript — reglas estrictas
+
+```ts
+// ✅ Tipos explícitos para datos de página — en lib/types/spec.ts
+export interface SpecHeroData {
+  eyebrowTag: string
+  heading: string
+  description: string
+  stats: ReadonlyArray<{ icon: string; value: string; label: string }>
+  ctaHref: string
+}
+
+export interface SpecPageData {
+  hero: SpecHeroData
+  facts: SpecFactData[]
+  intro: SpecIntroData
+  why: SpecWhyItem[]
+  procedures: SpecProcItem[]
+}
+```
+
+- **Nunca `any`** — si no conoces el tipo, usa `unknown` y narrowea
+- **`as const`** para arrays de datos estáticos (evita tipos widened)
+- **Props explícitas** — nunca prop `data: object` sin tipar
+- **`satisfies`** para validar objetos literales contra su tipo sin perder inference
+- Server Components no llevan tipos de evento ni hooks — si necesitas onClick/useState → `'use client'`
+
+---
+
+## 5. Server vs Client Components
+
+Next.js 15 App Router: **todo es Server Component por defecto**. `'use client'` es la excepción.
+
+```
+✅ Server Component (sin directiva):
+  - Secciones estáticas de contenido
+  - Páginas (page.tsx)
+  - Layout
+  - Componentes que solo reciben props y renderizan HTML
+
+✅ Client Component ('use client'):
+  - useState / useEffect / useCallback
+  - Formularios con interacción (EvaluationForm)
+  - Animaciones Framer Motion (motion.div)
+  - Nav con useState para el menú mobile
+  - WlsFloatCta (dismiss)
+  - Cualquier handler de evento del usuario
+```
+
+**Regla práctica:** si el componente no usa hooks ni eventos, no necesita `'use client'`. Cuestiona cada `'use client'` antes de añadirlo.
+
+---
+
+## 6. Imágenes — next/image obligatorio
+
+```tsx
+// ✅ Siempre next/image para imágenes informativas
+import Image from 'next/image'
+<Image
+  src="/photos/clinic-exterior.jpg"
+  alt={ALT_TEXTS.clinicExterior}   // ← de lib/altText.ts
+  width={1440}
+  height={547}
+  priority                          // ← solo en hero above-the-fold
+  className="object-cover w-full"
+/>
+
+// ✅ Decorativas — background gradient o div con role="presentation"
+<div role="presentation" aria-hidden="true" style={{ backgroundImage: '...' }} />
+
+// ❌ Nunca <img> para contenido informativo
+// ❌ Nunca alt="" en imágenes con contenido
+```
+
+- `priority` solo en la imagen LCP (hero above-the-fold por página)
+- `sizes` siempre en imágenes que cambian de tamaño entre breakpoints
+- Alt texts: definir en `lib/altText.ts`, importar — nunca strings inline en JSX
+
+---
+
+## 7. CSS — reglas estrictas
+
+### Tokens — siempre var(--color-*)
+```tsx
+// ❌ Nunca hex directo en componentes
+className="bg-[#0F1C3F]"
+
+// ✅ Siempre token
+className="bg-[var(--color-navy)]"
+```
+
+### Font sizes — siempre rem
+```tsx
+// ❌ Nunca px en texto
+className="text-[14px]"
+
+// ✅ Rem
+className="text-[0.875rem]"
+```
+
+### Gradients — única excepción para inline style
+```tsx
+// ✅ Los gradients copiados de Figma van en style={}
+style={{ backgroundImage: 'linear-gradient(18.43deg, ...)' }}
+
+// Para gradients usados en múltiples componentes → clase en globals.css
+.spec-hero-gradient { background-image: linear-gradient(...) }
+```
+
+### Layout — contenedor estándar por breakpoint
+```tsx
+// Ancho de contenido estándar — coincidir con Figma
+className="w-full px-4 sm:px-8 lg:px-0 lg:w-[980px] lg:mx-auto"
+// Mobile:  100% − 32px padding
+// Tablet:  100% − 64px padding
+// Desktop: 980px centrado (de 1440px total)
+```
+
+### Touch targets — obligatorio en todos los interactivos
+```tsx
+className="min-h-[48px] min-w-[48px]"
+```
+
+---
+
+## 8. Performance
+
+### Lazy loading de secciones below-the-fold
+```tsx
+// En page.tsx — secciones visibles sin scroll: import estático
+import WlsHero from '@/components/sections/spec/SpecHero'
+
+// Secciones below the fold: lazy import
+import dynamic from 'next/dynamic'
+const SpecWhy  = dynamic(() => import('@/components/sections/spec/SpecWhy'))
+const SpecProc = dynamic(() => import('@/components/sections/spec/SpecProc'))
+```
+
+Regla: las primeras 2 secciones de cada página → import estático. El resto → `dynamic`.
+
+### Framer Motion — solo donde aporta valor
+```tsx
+// ✅ Motion solo en Client Components — viewport animations para secciones
+'use client'
+import { motion } from 'framer-motion'
+
+// Patrón estándar: fade-up al entrar en viewport
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+}
+
+<motion.div
+  variants={fadeUp}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, margin: '-80px' }}
+>
+
+// ✅ Siempre respetar prefers-reduced-motion
+import { useReducedMotion } from 'framer-motion'
+const reduced = useReducedMotion()
+const variants = reduced ? {} : fadeUp
+```
+
+- `viewport={{ once: true }}` siempre — no re-animar en scroll down
+- No animar elementos above-the-fold (afecta LCP)
+- No wrappear secciones enteras en motion si solo un elemento debe animar
+
+---
+
+## 9. SEO y Metadata
+
+### Patrón por página
+```tsx
+// app/weight-loss/page.tsx
+export const metadata: Metadata = {
+  title: 'Weight Loss Surgery in Tijuana, Mexico',      // ← aparece como "... | Russald Medical Center"
+  description: 'Concise, benefit-forward. Max 155 chars.',
+  alternates: { canonical: '/weight-loss' },             // ← siempre canonical
+  openGraph: {
+    title:       'Weight Loss Surgery in Tijuana | Russald Medical Center',
+    description: '...',
+    url:         '/weight-loss',
+    images: [{ url: '/og/weight-loss.jpg', width: 1200, height: 630 }],
+  },
+}
+```
+
+### JSON-LD por página de especialidad
+```tsx
+// lib/schema.ts — agregar función por tipo de página
+export function medicalProcedureSchema(data: SpecPageData) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalProcedure',
+    name: data.hero.heading,
+    description: data.intro.paragraphs[0],
+    // ...
+  }
+}
+```
+
+Incluir en `page.tsx` via `<script type="application/ld+json">` — no en layout global.
+
+---
+
+## 10. Accesibilidad — obligatorio en cada componente
+
+- `<html lang="en">` en layout.tsx
+- Skip link como primer elemento del body
+- `role="main"` + `id="main-content"` en `<main>`
+- `aria-label="Main navigation"` en `<nav>`
+- Cada `<section>` debe tener `aria-labelledby` apuntando a su heading
+- Heading hierarchy: **una sola `<h1>` por página** — las secciones usan `<h2>`, `<h3>`
+- Inputs: `<label htmlFor>` + `aria-required` + `aria-describedby` para errores
+- Imágenes informativas: alt descriptivo en `lib/altText.ts`
+- Imágenes decorativas: `alt="" role="presentation"`
+- `:focus-visible` con `outline: 3px solid var(--color-blue-action)` — ya en globals.css
+- `aria-current="page"` en el nav link activo
+- Listas de tarjetas: `role="list"` en contenedor, `role="listitem"` en cada hijo
+
+---
+
+## 11. Estructura de carpetas — objetivo
+
+```
+src/
+├── styles/
+│   └── globals.css              ← tokens @theme + clases de gradient
+├── types/
+│   └── spec.ts                  ← interfaces SpecHeroData, SpecPageData, etc.
+├── lib/
+│   ├── config.ts                ← env vars (ZAPIER_WEBHOOK_URL, LEADS_ENABLED)
+│   ├── schema.ts                ← JSON-LD: organizationSchema, medicalProcedureSchema
+│   ├── altText.ts               ← alt texts tipados — nunca strings inline en JSX
+│   └── pages/                   ← datos de contenido por página
+│       ├── weightLoss.ts
+│       ├── plasticSurgery.ts
+│       └── hairRestoration.ts
+├── components/
+│   ├── ui/                      ← átomos sin lógica de negocio
+│   │   ├── Button.tsx
+│   │   ├── Input.tsx
+│   │   ├── Select.tsx
+│   │   └── SpecialtyCard.tsx
+│   ├── layout/                  ← chrome del sitio
+│   │   ├── Header.tsx
+│   │   ├── Nav.tsx
+│   │   └── Footer.tsx
+│   ├── sections/
+│   │   ├── spec/                ← templates reutilizables para páginas internas
+│   │   │   ├── SpecHero.tsx         (refactor de WlsHero)
+│   │   │   ├── SpecFactsStrip.tsx   (refactor de WlsFactsStrip)
+│   │   │   ├── SpecIntro.tsx        (refactor de WlsIntro)
+│   │   │   ├── SpecWhy.tsx          (refactor de WlsWhy)
+│   │   │   ├── SpecProc.tsx         (refactor de WlsProc)
+│   │   │   └── SpecFloatCta.tsx     (refactor de WlsFloatCta)
+│   │   ├── HomeHero.tsx         ← secciones únicas de Home
+│   │   ├── HomeWho.tsx
+│   │   ├── HomeWhy.tsx
+│   │   ├── HomeSpecialties.tsx
+│   │   ├── BioBreaker.tsx
+│   │   ├── HimplantCallout.tsx
+│   │   ├── LocationStrip.tsx
+│   │   ├── HomeJourney.tsx
+│   │   ├── HomeProcedures.tsx
+│   │   └── EvalFormSection.tsx  ← compartida entre Home y páginas internas
+│   ├── EvaluationForm.tsx       ← lógica del formulario 2 pasos ('use client')
+│   └── SpecFloatCta.tsx         ← widget flotante ('use client')
+└── app/
+    ├── layout.tsx
+    ├── page.tsx                  ← Home
+    ├── sitemap.ts
+    ├── robots.ts
+    ├── api/leads/route.ts
+    ├── weight-loss/page.tsx
+    ├── plastic-surgery/page.tsx
+    ├── hair-restoration/page.tsx
+    └── [...slug]/page.tsx        ← catch-all para páginas aún no construidas
+```
+
+---
+
+## 12. Tokens del Figma
+
+```css
+/* globals.css @theme */
+--color-navy:        #0F1C3F;
+--color-charcoal:    #0F172A;
+--color-blue:        #1D56C4;
+--color-blue-action: #2563EB;
+--color-blue-light:  #93C5FD;
+--color-gold:        #B5862A;
+--color-muted:       #64748B;
+--color-border:      #E2E8F0;
+--color-white:       #FFFFFF;
+--color-ice:         #F8FAFC;
+--font-display:      'Rethink Sans', sans-serif;
+--font-body:         'Nunito Sans', sans-serif;
+--radius-btn:        50px;
+--radius-card:       12px;
+```
+
+---
+
+## 13. Breakpoints responsive — coincidir con Figma
+
+| Breakpoint | Tailwind | Figma frame | Contenido |
+|---|---|---|---|
+| Mobile | default (< 640px) | 390px | 100% − px-4 |
+| Tablet | `sm:` 640px | 834px | 100% − px-8 |
+| Desktop | `lg:` 1024px | 1440px | 980px centrado |
+
+---
+
+## 14. Tabla de Node IDs — Home
 
 | Componente | Archivo | Desktop | Tablet | Mobile |
 |---|---|---|---|---|
@@ -47,134 +426,54 @@ Agregar el node ID como comentario en la línea 1 de cada componente:
 | Eval-Form | sections/EvalFormSection.tsx | `2300:720` | `2323:988` | `2334:1568` |
 | Footer | layout/Footer.tsx | `2300:810` | `2322:909` | `2334:1658` |
 
-### Página: Weight Loss Surgery (`app/weight-loss-surgery/`) — Figma canvas `2143:7`
+## 14b. Tabla de Node IDs — Weight Loss Surgery (canvas `2143:7`)
 
-| Componente | Archivo | Desktop | Tablet | Mobile |
+| Componente | Archivo destino | Desktop | Tablet | Mobile |
 |---|---|---|---|---|
-| WLS-Hero | sections/WlsHero.tsx | `2143:243` | `2201:378` | `2156:222` |
-| WLS-Facts-Strip | sections/WlsFactsStrip.tsx | `2143:277` | `2284:888` | `2169:46` |
-| WLS-Intro | sections/WlsIntro.tsx | `2143:291` | `2284:902` | `2169:61` |
-| WLS-Why | sections/WlsWhy.tsx | `2143:325` | `2208:483` | `2169:93` |
-| WLS-Proc | sections/WlsProc.tsx | `2143:358` | `2208:517` | `2169:130` |
-| WLS-Float-CTA | WlsFloatCta.tsx | `2143:414` | `2216:550` | `2144:385` |
+| Spec-Hero | sections/spec/SpecHero.tsx | `2143:243` | `2201:378` | `2156:222` |
+| Spec-Facts-Strip | sections/spec/SpecFactsStrip.tsx | `2143:277` | `2284:888` | `2169:46` |
+| Spec-Intro | sections/spec/SpecIntro.tsx | `2143:291` | `2284:902` | `2169:61` |
+| Spec-Why | sections/spec/SpecWhy.tsx | `2143:325` | `2208:483` | `2169:93` |
+| Spec-Proc | sections/spec/SpecProc.tsx | `2143:358` | `2208:517` | `2169:130` |
+| Spec-Float-CTA | SpecFloatCta.tsx | `2143:414` | `2216:550` | `2144:385` |
 
-## Estructura de carpetas
-```
-src/
-├── styles/
-│   └── globals.css          ← tokens @theme — NUNCA hardcodear hex en componentes
-├── components/
-│   ├── ui/                  ← átomos reutilizables
-│   │   ├── Button.tsx
-│   │   ├── Input.tsx
-│   │   ├── Select.tsx
-│   │   └── SpecialtyCard.tsx
-│   ├── layout/
-│   │   ├── Header.tsx
-│   │   ├── Nav.tsx
-│   │   └── Footer.tsx
-│   ├── sections/            ← una sección = un archivo = un node Figma
-│   │   ├── HomeHero.tsx
-│   │   ├── HomeWho.tsx
-│   │   ├── HomeWhy.tsx
-│   │   ├── HomeSpecialties.tsx
-│   │   ├── BioBreaker.tsx
-│   │   ├── HimplantCallout.tsx
-│   │   ├── LocationStrip.tsx
-│   │   ├── HomeJourney.tsx
-│   │   ├── HomeProcedures.tsx
-│   │   └── EvalFormSection.tsx
-│   └── EvaluationForm.tsx   ← lógica del formulario 2 pasos
-├── lib/
-│   ├── config.ts            ← ZAPIER_WEBHOOK_URL + LEADS_ENABLED
-│   ├── schema.ts            ← JSON-LD functions
-│   └── altText.ts           ← alt texts tipados — nunca hardcodear en JSX
-└── app/
-    ├── layout.tsx
-    ├── page.tsx
-    ├── sitemap.ts
-    ├── robots.ts
-    ├── api/leads/route.ts
-    └── [slug]/page.tsx
-```
+---
 
-## Reglas CSS — seguir estrictamente
-- Tokens en `globals.css @theme` — nunca hex en componentes
-- Usar `var(--color-*)` para colores de marca
-- Tailwind utilities para layout y espaciado
-- Todos los font-size en `rem` — nunca `px` en body text
-- `backgroundImage` gradients: única excepción para inline styles (copiados de Figma)
-- Touch targets: `min-h-[48px] min-w-[48px]` en todos los interactivos
+## 15. Git workflow
 
-## Tokens del Figma (extraídos — usar en globals.css @theme)
-```css
---color-navy:        #0F1C3F;
---color-charcoal:    #0F172A;
---color-blue:        #1D56C4;
---color-blue-action: #2563EB;
---color-blue-light:  #93C5FD;
---color-gold:        #B5862A;
---color-muted:       #64748B;
---color-border:      #E2E8F0;
---color-white:       #FFFFFF;
---color-ice:         #F8FAFC;
---font-display:      'Rethink Sans', sans-serif;
---font-body:         'Nunito Sans', sans-serif;
---radius-btn:        50px;
---radius-card:       12px;
-```
-
-## Breakpoints responsive — coincidir con Figma
-```
-Mobile:  < 640px   → Figma frame 390px  → default (mobile-first)
-Tablet:  sm: 640px → Figma frame 834px
-Desktop: lg: 1024px → Figma frame 1440px
-```
-
-## Accesibilidad — obligatorio en cada componente
-- `<html lang="en">` en layout.tsx
-- Skip link como primer elemento del body
-- `role="main"` en `<main id="main-content">`
-- `aria-label="Main navigation"` en `<nav>`
-- Cada input: `label[htmlFor]` + `aria-required` + `aria-describedby`
-- Imágenes informativas: alt descriptivo en `lib/altText.ts`
-- Imágenes decorativas: `alt="" role="presentation"`
-- `:focus-visible` con outline 3px en globals.css
-
-## Git workflow — 2 personas
 ```
 main  → producción (russaldmedical.com)
 qa    → staging    (qa-russald.vercel.app)
 dev   → integración
 feat/[componente] → trabajo individual
 ```
-- Nunca push directo a main ni qa
-- Siempre branch desde dev
-- Nombre de branch = nombre del componente: `feat/home-hero`
-- Commit: `feat: HomeHero — Figma node 2300:705`
 
-## PR checklist — antes de merge a qa
-- [ ] Componente coincide visualmente con Figma (Desktop + Tablet + Mobile)
+- Nunca push directo a `main` ni `qa`
+- Siempre branch desde `dev`
+- Nombre de branch: `feat/weight-loss` · `feat/spec-templates` · `fix/nav-links`
+- Commit: `feat: SpecHero template — Figma node 2143:243`
+
+---
+
+## 16. PR checklist — antes de merge a qa
+
+- [ ] Coincide visualmente con Figma (Desktop + Tablet + Mobile)
 - [ ] Sin hex hardcodeados — solo `var(--color-*)`
-- [ ] Font sizes en rem
-- [ ] Touch targets min-h-[48px]
-- [ ] Alt texts en lib/altText.ts
-- [ ] aria-label / aria-required en form fields
-- [ ] Sin errores TypeScript
+- [ ] Font sizes en `rem`
+- [ ] Touch targets `min-h-[48px]`
+- [ ] `<h1>` única por página, jerarquía h2/h3 correcta
+- [ ] Alt texts en `lib/altText.ts`
+- [ ] `aria-labelledby` en cada `<section>`
+- [ ] Sin errores TypeScript (`tsc --noEmit` limpio)
+- [ ] Imágenes con `<Image>` de next/image
+- [ ] `'use client'` solo donde es necesario
 - [ ] Lighthouse Accessibility ≥ 95
 
-## Orden de extracción de componentes
-1. `ui/Button.tsx` — desde node Hero `2300:705`
-2. `ui/Input.tsx` + `ui/Select.tsx`
-3. `ui/SpecialtyCard.tsx` — desde node `2298:252`
-4. `layout/Header.tsx` — node `116:2`
-5. `layout/Nav.tsx` — node `2006:2`
-6. `layout/Footer.tsx` — node `2300:810`
-7. `app/layout.tsx`
-8. `sections/HomeHero.tsx` — node `2300:705`
-9. Resto de secciones en orden de la tabla
-10. `EvaluationForm.tsx` — corazón del sitio
+---
 
-## Webhook — cableado pero inactivo
-`LEADS_ENABLED=false` en dev y local → dry-run (console.log)
-`LEADS_ENABLED=true` solo en main cuando el equipo confirme el webhook URL
+## 17. Webhook — cableado pero inactivo
+
+```
+LEADS_ENABLED=false  → dev y local → dry-run (console.log)
+LEADS_ENABLED=true   → main únicamente, cuando el equipo confirme el URL
+```
