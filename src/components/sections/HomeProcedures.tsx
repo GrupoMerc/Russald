@@ -77,7 +77,7 @@ const specialties: SpecialtyGroup[] = [
 
 const cardBase =
   'flex items-center gap-3 rounded-[8px] border border-[var(--color-border)] bg-[var(--color-white)] p-4 shadow-[0px_1px_3px_0px_rgba(15,28,63,0.08)] ' +
-  'transition-shadow hover:shadow-[0px_4px_12px_0px_rgba(15,28,63,0.12)] hover:border-[var(--color-blue-action)]/30 ' +
+  'transition-shadow hover:shadow-[0px_4px_12px_0px_rgba(15,28,63,0.12)] hover:border-[var(--color-blue)]/30 ' +
   'focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]'
 
 function ProcedureCard({ proc, emoji }: { proc: Procedure; emoji: string }) {
@@ -99,7 +99,7 @@ function ProcedureCard({ proc, emoji }: { proc: Procedure; emoji: string }) {
         {/* Gold → blue accent */}
         <div
           className="h-[2px] w-full"
-          style={{ backgroundImage: 'linear-gradient(to right, #b5862a, #2563eb)' }}
+          style={{ backgroundImage: 'linear-gradient(to right, #b5862a, var(--color-blue))' }}
           aria-hidden="true"
         />
         <div className="flex items-center gap-3 px-4 py-[0.875rem]">
@@ -155,7 +155,7 @@ export default function HomeProcedures() {
 
         {/* ── Header ── */}
         <div className="flex flex-col items-center">
-          <p className="text-center font-['Nunito_Sans',sans-serif] text-[0.656rem] font-bold uppercase tracking-[1.89px] text-[var(--color-blue-action)]">
+          <p className="text-center font-['Nunito_Sans',sans-serif] text-[0.656rem] font-bold uppercase tracking-[1.89px] text-[var(--color-blue)]">
             Browse All Procedures
           </p>
           <div className="h-[10px]" />
@@ -164,10 +164,10 @@ export default function HomeProcedures() {
             className="text-center font-['Rethink_Sans',sans-serif] text-[1.5rem] font-bold leading-normal tracking-[-0.005em] sm:text-[1.875rem]"
           >
             <span className="text-[var(--color-charcoal)]">Find Your </span>
-            <span className="italic text-[var(--color-blue-action)]">Procedure</span>
+            <span className="italic text-[var(--color-blue)]">Procedure</span>
           </h2>
           <div className="h-3 sm:h-[14px]" />
-          <div className="h-[3px] w-9 rounded-[2px] bg-[var(--color-blue-action)]" />
+          <div className="h-[3px] w-9 rounded-[2px] bg-[var(--color-navy)]" />
           <div className="h-4 sm:h-5" />
           <p className="max-w-[600px] text-center font-['Nunito_Sans',sans-serif] text-[0.875rem] font-normal leading-[1.75] text-[var(--color-muted)] sm:text-[0.9375rem]">
             Every procedure page includes full clinical information, candidacy criteria, the
@@ -184,7 +184,7 @@ export default function HomeProcedures() {
               <span className="text-[1.375rem]" aria-hidden="true">{group.emoji}</span>
               <Link
                 href={group.href}
-                className="font-['Rethink_Sans',sans-serif] text-[1.25rem] font-bold text-[var(--color-navy)] hover:text-[var(--color-blue-action)] transition-colors sm:text-[1.5rem] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]"
+                className="font-['Rethink_Sans',sans-serif] text-[1.25rem] font-bold text-[var(--color-navy)] hover:text-[var(--color-blue)] transition-colors sm:text-[1.5rem] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]"
               >
                 {group.name}
               </Link>

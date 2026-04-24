@@ -33,7 +33,7 @@ export default function HomeJourney() {
 
         {/* ── Header ── */}
         <div className="flex flex-col items-center">
-          <p className="text-center font-['Nunito_Sans',sans-serif] text-[0.656rem] font-bold uppercase tracking-[1.89px] text-[var(--color-blue-action)]">
+          <p className="text-center font-['Nunito_Sans',sans-serif] text-[0.656rem] font-bold uppercase tracking-[1.89px] text-[var(--color-blue)]">
             How It Works
           </p>
           <div className="h-[10px]" />
@@ -42,10 +42,10 @@ export default function HomeJourney() {
             className="text-center font-['Rethink_Sans',sans-serif] text-[1.5rem] font-bold leading-[1.15] tracking-[-0.005em] sm:text-[1.875rem]"
           >
             <span className="block text-[var(--color-charcoal)]">Your Path from First</span>
-            <span className="block text-[var(--color-blue-action)]">Contact to Recovery</span>
+            <span className="block text-[var(--color-blue)]">Contact to Recovery</span>
           </h2>
           <div className="h-3 sm:h-[14px]" />
-          <div className="h-[3px] w-9 rounded-[2px] bg-[var(--color-blue-action)]" />
+          <div className="h-[3px] w-9 rounded-[2px] bg-[var(--color-navy)]" />
           <div className="h-4 sm:h-5" />
           <p className="max-w-[640px] text-center font-['Nunito_Sans',sans-serif] text-[0.875rem] font-normal leading-[1.75] text-[var(--color-muted)] sm:text-[0.9375rem]">
             We have structured the international patient experience so that every step: from your
@@ -76,7 +76,7 @@ export default function HomeJourney() {
               >
                 {/* Number badge */}
                 <div
-                  className="relative z-10 flex size-14 shrink-0 items-center justify-center rounded-full border-[3px] border-[var(--color-white)] bg-[var(--color-blue-action)]"
+                  className="relative z-10 flex size-14 shrink-0 items-center justify-center rounded-full border-[3px] border-[var(--color-white)] bg-[var(--color-blue)]"
                   style={{
                     boxShadow:
                       '0px 4px 16px 0px rgba(29,86,196,0.2), 0px 0px 0px 6px rgba(238,241,255,1)',
@@ -89,7 +89,7 @@ export default function HomeJourney() {
 
                 <div className="h-[14px] sm:h-[18px]" />
 
-                <p className="text-center font-['Rethink_Sans',sans-serif] text-[0.844rem] font-bold text-[var(--color-blue-action)]">
+                <p className="text-center font-['Rethink_Sans',sans-serif] text-[0.844rem] font-bold text-[var(--color-blue)]">
                   {step.title}
                 </p>
 
