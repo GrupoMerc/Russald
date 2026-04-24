@@ -54,7 +54,7 @@ export default function SpecHero({ data }: Props) {
             <div className="hidden sm:flex items-center gap-3 mt-2">
               <a
                 href="#spec-procedures"
-                className="min-h-[48px] flex items-center justify-center px-7 py-3 rounded-[var(--radius-btn)] bg-[var(--color-blue-action)] font-['Rethink_Sans',sans-serif] font-bold text-[0.875rem] text-white tracking-[0.02em] hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]"
+                className="min-h-[48px] flex items-center justify-center px-7 py-3 rounded-[var(--radius-btn)] bg-[var(--color-blue)] font-['Rethink_Sans',sans-serif] font-bold text-[0.875rem] text-white tracking-[0.02em] hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]"
               >
                 View Procedures
               </a>
@@ -96,7 +96,7 @@ export default function SpecHero({ data }: Props) {
         <div className="sm:hidden flex flex-col gap-2.5 mt-5 w-full">
           <a
             href="#spec-procedures"
-            className="min-h-[48px] flex items-center justify-center w-full px-7 py-3 rounded-[var(--radius-btn)] bg-[var(--color-blue-action)] font-['Rethink_Sans',sans-serif] font-bold text-[0.875rem] text-white tracking-[0.02em] hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]"
+            className="min-h-[48px] flex items-center justify-center w-full px-7 py-3 rounded-[var(--radius-btn)] bg-[var(--color-blue)] font-['Rethink_Sans',sans-serif] font-bold text-[0.875rem] text-white tracking-[0.02em] hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]"
           >
             View Procedures
           </a>
