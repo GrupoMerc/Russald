@@ -46,7 +46,7 @@ export default function SpecHero({ data }: Props) {
               {data.heading}
             </h1>
 
-            <p className="font-['Nunito_Sans',sans-serif] font-normal text-white/85 text-[0.875rem] leading-[1.85]">
+            <p className="font-['Nunito_Sans',sans-serif] font-normal text-white/85 text-[0.875rem] leading-[1.5] sm:leading-[1.85]">
               {data.description}
             </p>
 
@@ -69,7 +69,7 @@ export default function SpecHero({ data }: Props) {
 
           {/* stat card */}
           <div
-            className="mt-5 sm:mt-0 sm:w-[276px] lg:w-[300px] shrink-0 bg-white/[0.07] border border-white/[0.12] rounded-[var(--radius-card)] p-5"
+            className="mt-5 sm:mt-0 sm:w-[276px] lg:w-[300px] shrink-0 bg-white/[0.07] border border-white/[0.12] rounded-[var(--radius-card)] px-4 py-2 sm:p-5"
             role="list"
             aria-label="Key statistics"
           >
@@ -78,11 +78,11 @@ export default function SpecHero({ data }: Props) {
                 key={stat.label}
                 role="listitem"
                 className={[
-                  'flex items-center gap-3 py-3 px-1',
+                  'flex items-center gap-3 py-[10px] sm:py-3 px-1',
                   i < data.stats.length - 1 ? 'border-b border-white/[0.08]' : '',
                 ].join(' ')}
               >
-                <span className="text-[1.125rem] shrink-0" aria-hidden="true">{stat.icon}</span>
+                <span className="text-[1rem] sm:text-[1.125rem] shrink-0" aria-hidden="true">{stat.icon}</span>
                 <div className="flex flex-col gap-0.5">
                   <span className="font-['Rethink_Sans',sans-serif] font-bold text-white text-[1rem] lg:text-[1.125rem] leading-snug">{stat.value}</span>
                   <span className="font-['Nunito_Sans',sans-serif] font-normal text-white/55 text-[0.6875rem] tracking-[0.99px] uppercase">{stat.label}</span>

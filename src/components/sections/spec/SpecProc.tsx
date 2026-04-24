@@ -38,7 +38,7 @@ export default function SpecProc({ data }: Props) {
         <div className="h-6" aria-hidden="true" />
 
         {/* 1 col mobile · 2 col sm+ */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5" role="list">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4" role="list">
           {data.procedures.map((proc) => {
             const inner = (
               <>

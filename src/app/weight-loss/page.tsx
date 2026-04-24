@@ -1,12 +1,18 @@
-import type { Metadata } from 'next'
+import type { Metadata }  from 'next'
+import dynamic            from 'next/dynamic'
 import { wlsData }        from '@/lib/pages/weightLoss'
-import SpecHero           from '@/components/sections/spec/SpecHero'
-import SpecFactsStrip     from '@/components/sections/spec/SpecFactsStrip'
-import SpecIntro          from '@/components/sections/spec/SpecIntro'
-import SpecWhy            from '@/components/sections/spec/SpecWhy'
-import SpecProc           from '@/components/sections/spec/SpecProc'
-import EvalFormSection    from '@/components/sections/EvalFormSection'
-import SpecFloatCta       from '@/components/sections/spec/SpecFloatCta'
+import { procedureSchema } from '@/lib/schema'
+
+// Static — above the fold (LCP)
+import SpecHero        from '@/components/sections/spec/SpecHero'
+import SpecFactsStrip  from '@/components/sections/spec/SpecFactsStrip'
+
+// Dynamic — below the fold
+const SpecIntro      = dynamic(() => import('@/components/sections/spec/SpecIntro'))
+const SpecWhy        = dynamic(() => import('@/components/sections/spec/SpecWhy'))
+const SpecProc       = dynamic(() => import('@/components/sections/spec/SpecProc'))
+const EvalFormSection = dynamic(() => import('@/components/sections/EvalFormSection'))
+const SpecFloatCta   = dynamic(() => import('@/components/sections/spec/SpecFloatCta'))
 
 export const metadata: Metadata = {
   title: 'Weight Loss Surgery in Tijuana, Mexico',
@@ -20,9 +26,19 @@ export const metadata: Metadata = {
   },
 }
 
+const jsonLd = procedureSchema(
+  'Weight Loss Surgery',
+  wlsData.intro.paragraphs[0],
+  'https://russaldmedical.com/weight-loss',
+)
+
 export default function WeightLossSurgeryPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <SpecHero       data={wlsData.hero}  />
       <SpecFactsStrip facts={wlsData.facts} />
       <SpecIntro      data={wlsData.intro}  />
