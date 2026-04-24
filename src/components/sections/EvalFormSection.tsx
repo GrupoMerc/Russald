@@ -22,7 +22,7 @@ export default function EvalFormSection({ defaultProcedure }: Props) {
       className="flex flex-col items-center px-4 py-12 sm:px-8 sm:py-14 lg:py-[72px]"
       style={{
         backgroundImage:
-          'linear-gradient(12.29deg, rgb(13,42,80) 47.66%, rgb(15,28,63) 78.86%, rgb(10,61,74) 125.66%)',
+          'linear-gradient(30.9deg, rgb(48,137,226) 39.645%, rgb(255,255,255) 110.36%)',
       }}
     >
       <div className="flex w-full max-w-[900px] flex-col gap-8 sm:gap-10 lg:flex-row lg:items-start lg:gap-14">
