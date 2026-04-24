@@ -1,6 +1,10 @@
 // Figma node: 2300:720 — Section/Eval-Form (Desktop) · 2323:988 (Tablet) · 2334:1568 (Mobile)
 import EvaluationForm from '@/components/EvaluationForm'
 
+interface Props {
+  defaultProcedure?: string
+}
+
 const bullets = [
   { emoji: '🩺', bold: 'Pre-approval path',                rest: ': submit your profile and receive a pre-approval decision' },
   { emoji: '⏱',  bold: 'Response within 1 business day',  rest: ': often same day' },
@@ -10,7 +14,7 @@ const bullets = [
   { emoji: '💰', bold: 'Transparent pricing',              rest: ': receive a personalized cost breakdown' },
 ] as const
 
-export default function EvalFormSection() {
+export default function EvalFormSection({ defaultProcedure }: Props) {
   return (
     <section
       id="eval-form"
@@ -62,7 +66,9 @@ export default function EvalFormSection() {
         </div>
 
         {/* ── Interactive form card ── */}
-        <EvaluationForm />
+        <div className="w-full lg:w-[440px] lg:shrink-0">
+          <EvaluationForm defaultProcedure={defaultProcedure} />
+        </div>
 
       </div>
     </section>
