@@ -124,6 +124,8 @@ function validate1(d: Step1): Errors1 {
   if (!d.lastName.trim()) e.lastName = 'Required'
   if (!d.email.trim()) e.email = 'Required'
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) e.email = 'Enter a valid email'
+  if (!d.phone.trim()) e.phone = 'Required'
+  else if (!/^[\d\s\-+().]{7,}$/.test(d.phone)) e.phone = 'Enter a valid phone number'
   if (!d.procedure) e.procedure = 'Please select a procedure'
   if (!d.country) e.country = 'Please select your country'
   if (!d.contactTime) e.contactTime = 'Please select a preferred time'
@@ -353,9 +355,11 @@ export default function EvaluationForm() {
               name="phone"
               type="tel"
               placeholder="+1 (555) 000-0000"
+              required
               autoComplete="tel"
               value={s1.phone}
               onChange={onS1Change('phone') as React.ChangeEventHandler<HTMLInputElement>}
+              error={e1.phone}
             />
           </div>
 

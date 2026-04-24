@@ -47,6 +47,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className = '',
       disabled,
       onClick,
+      type = 'button',
       'aria-label': ariaLabel,
       ...rest
     },
@@ -73,6 +74,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
+        type={type}
         className={classes}
         disabled={disabled}
         onClick={onClick}

@@ -1,4 +1,5 @@
 // Figma node: 2298:875 — Section/Bio-Breaker (Desktop) · 2330:1233 (Tablet) · 2337:1871 (Mobile)
+import Link from 'next/link'
 import Button from '@/components/ui/Button'
 
 const pills = [
@@ -78,7 +79,7 @@ export default function BioBreaker() {
 
           <div className="h-7" />
 
-          <Button href="#evaluation" variant="primary" size="md">
+          <Button href="#eval-form" variant="primary" size="md">
             Explore Protocols →
           </Button>
         </div>
@@ -107,9 +108,12 @@ export default function BioBreaker() {
             ))}
           </div>
 
-          <p className="text-right font-['Nunito_Sans',sans-serif] text-[0.719rem] font-normal text-[rgba(255,255,255,0.35)]">
+          <Link
+            href="/bio-optimization"
+            className="text-right font-['Nunito_Sans',sans-serif] text-[0.719rem] font-normal text-[rgba(255,255,255,0.35)] hover:text-[rgba(255,255,255,0.65)] transition-colors focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]"
+          >
             + 5 more protocols · View all →
-          </p>
+          </Link>
         </div>
 
       </div>
