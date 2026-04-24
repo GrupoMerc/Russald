@@ -11,11 +11,11 @@ export const metadata: Metadata = {
   title: 'Weight Loss Surgery in Tijuana, Mexico',
   description:
     'Gastric sleeve, gastric bypass, mini bypass, Lap-Band & revision surgery — 65–75% less than US prices, 20 minutes from San Diego. Fellowship-trained bariatric surgeons at Russald Medical Center.',
-  alternates: { canonical: '/weight-loss-surgery' },
+  alternates: { canonical: '/weight-loss' },
   openGraph: {
     title:       'Weight Loss Surgery in Tijuana | Russald Medical Center',
     description: 'Gastric sleeve, gastric bypass, mini bypass, Lap-Band & revision surgery — 65–75% less than US prices, 20 minutes from San Diego.',
-    url:         '/weight-loss-surgery',
+    url:         '/weight-loss',
   },
 }
 
