@@ -221,7 +221,7 @@ export default function EvaluationForm({ defaultProcedure = '', showHeader = fal
     if (!firstName.trim()) e.firstName = 'Required'
     if (!lastName.trim())  e.lastName  = 'Required'
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = 'Enter a valid email'
-    if (!phone.trim())     e.phone     = 'Required'
+    if (!phone.trim() || !/^\+?[\d\s\-\(\)]{7,20}$/.test(phone.trim())) e.phone = 'Enter a valid phone number'
     if (!procedure)        e.procedure = 'Please select a procedure'
     if (!country)          e.country   = 'Please select your country'
     if (!contactTime)      e.contactTime = 'Please select a time'
@@ -233,9 +233,20 @@ export default function EvaluationForm({ defaultProcedure = '', showHeader = fal
     const errs = validate1()
     if (Object.keys(errs).length > 0) { setErrors(errs); return }
     setErrors({})
+    // Fire step 1 webhook — non-blocking, user proceeds regardless
+    void fetch('/api/leads', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        step: 1,
+        firstName, lastName, email, phone,
+        procedure: procLabel, procType,
+        country, state, otherCountry, contactTime, notes,
+      }),
+    })
     if (procType === 'm') { void submitForm(); return }
     setStage('step2')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    document.getElementById('eval-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   async function submitForm(e?: React.FormEvent) {
@@ -246,15 +257,13 @@ export default function EvaluationForm({ defaultProcedure = '', showHeader = fal
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firstName, lastName, email, phone,
-          procedure: procLabel, procType,
-          country, state, otherCountry, contactTime, notes,
-          ...(procType === 's' && {
-            height, weight, smokingStatus, conditions,
-            cancerHistory, cancerDetail,
-            bloodThinners, bloodThinnersOther,
-            prevSurgery, prevSurgeryDetail, timeline,
-          }),
+          step: 2,
+          email, // identifier to update the lead in Zapier
+          procedure: procLabel,
+          height, weight, smokingStatus, conditions,
+          cancerHistory, cancerDetail,
+          bloodThinners, bloodThinnersOther,
+          prevSurgery, prevSurgeryDetail, timeline,
         }),
       })
       setStage('success')
@@ -364,8 +373,9 @@ export default function EvaluationForm({ defaultProcedure = '', showHeader = fal
                 <ErrMsg msg={errors.email} />
               </div>
               <div>
-                <label htmlFor="ef-ph" className={LBL}>Phone / WhatsApp</label>
-                <input id="ef-ph" type="tel" className={inpCls()} value={phone} onChange={e => setPhone(e.target.value)} placeholder="+1 (555) 000-0000" autoComplete="tel" />
+                <label htmlFor="ef-ph" className={LBL}>Phone / WhatsApp *</label>
+                <input id="ef-ph" type="tel" className={inpCls(errors.phone)} value={phone} onChange={e => { setPhone(e.target.value); clearErr('phone') }} placeholder="+1 (555) 000-0000" autoComplete="tel" />
+                <ErrMsg msg={errors.phone} />
               </div>
             </div>
 
