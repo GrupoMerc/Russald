@@ -47,6 +47,17 @@ Agregar el node ID como comentario en la línea 1 de cada componente:
 | Eval-Form | sections/EvalFormSection.tsx | `2300:720` | `2323:988` | `2334:1568` |
 | Footer | layout/Footer.tsx | `2300:810` | `2322:909` | `2334:1658` |
 
+### Página: Weight Loss Surgery (`app/weight-loss-surgery/`) — Figma canvas `2143:7`
+
+| Componente | Archivo | Desktop | Tablet | Mobile |
+|---|---|---|---|---|
+| WLS-Hero | sections/WlsHero.tsx | `2143:243` | `2201:378` | `2156:222` |
+| WLS-Facts-Strip | sections/WlsFactsStrip.tsx | `2143:277` | `2284:888` | `2169:46` |
+| WLS-Intro | sections/WlsIntro.tsx | `2143:291` | `2284:902` | `2169:61` |
+| WLS-Why | sections/WlsWhy.tsx | `2143:325` | `2208:483` | `2169:93` |
+| WLS-Proc | sections/WlsProc.tsx | `2143:358` | `2208:517` | `2169:130` |
+| WLS-Float-CTA | WlsFloatCta.tsx | `2143:414` | `2216:550` | `2144:385` |
+
 ## Estructura de carpetas
 ```
 src/
