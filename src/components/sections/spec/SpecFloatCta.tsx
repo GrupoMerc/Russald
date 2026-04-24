@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 
-export default function WlsFloatCta() {
+export default function SpecFloatCta() {
   const [dismissed, setDismissed] = useState(false)
 
   if (dismissed) return null
@@ -14,7 +14,6 @@ export default function WlsFloatCta() {
       role="complementary"
       aria-label="Free evaluation offer"
     >
-      {/* dismiss */}
       <div className="flex justify-end">
         <button
           onClick={() => setDismissed(true)}
@@ -25,21 +24,14 @@ export default function WlsFloatCta() {
         </button>
       </div>
 
-      {/* CTA button */}
       <a
         href="#eval-form"
         onClick={() => setDismissed(true)}
         className="flex items-center gap-3 px-4 py-[14px] rounded-[10px] shadow-[0px_4px_12px_0px_rgba(29,86,196,0.3)] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]"
-        style={{
-          backgroundImage: 'linear-gradient(to right, #0a9882, #1d56c4)',
-        }}
+        style={{ backgroundImage: 'linear-gradient(to right, #0a9882, #1d56c4)' }}
         aria-label="Request free evaluation — no commitment, English-speaking team"
       >
-        {/* pulse dot */}
-        <span
-          className="shrink-0 w-2.5 h-2.5 rounded-full bg-white/90 animate-pulse"
-          aria-hidden="true"
-        />
+        <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-white/90 animate-pulse" aria-hidden="true" />
         <div className="flex flex-col gap-0.5 min-w-0">
           <span className="font-['Rethink_Sans',sans-serif] font-bold text-white text-[0.875rem] leading-[1.125rem]">
             Request Free Evaluation

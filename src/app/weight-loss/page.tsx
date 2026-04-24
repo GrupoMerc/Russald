@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
-import WlsHero        from '@/components/sections/WlsHero'
-import WlsFactsStrip  from '@/components/sections/WlsFactsStrip'
-import WlsIntro       from '@/components/sections/WlsIntro'
-import WlsWhy         from '@/components/sections/WlsWhy'
-import WlsProc        from '@/components/sections/WlsProc'
-import EvalFormSection from '@/components/sections/EvalFormSection'
-import WlsFloatCta    from '@/components/WlsFloatCta'
+import { wlsData }        from '@/lib/pages/weightLoss'
+import SpecHero           from '@/components/sections/spec/SpecHero'
+import SpecFactsStrip     from '@/components/sections/spec/SpecFactsStrip'
+import SpecIntro          from '@/components/sections/spec/SpecIntro'
+import SpecWhy            from '@/components/sections/spec/SpecWhy'
+import SpecProc           from '@/components/sections/spec/SpecProc'
+import EvalFormSection    from '@/components/sections/EvalFormSection'
+import SpecFloatCta       from '@/components/sections/spec/SpecFloatCta'
 
 export const metadata: Metadata = {
   title: 'Weight Loss Surgery in Tijuana, Mexico',
@@ -22,13 +23,13 @@ export const metadata: Metadata = {
 export default function WeightLossSurgeryPage() {
   return (
     <>
-      <WlsHero />
-      <WlsFactsStrip />
-      <WlsIntro />
-      <WlsWhy />
-      <WlsProc />
+      <SpecHero       data={wlsData.hero}  />
+      <SpecFactsStrip facts={wlsData.facts} />
+      <SpecIntro      data={wlsData.intro}  />
+      <SpecWhy        data={wlsData.why}    />
+      <SpecProc       data={wlsData.proc}   />
       <EvalFormSection />
-      <WlsFloatCta />
+      <SpecFloatCta />
     </>
   )
 }
