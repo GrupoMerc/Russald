@@ -1,6 +1,7 @@
 // Figma node: 2300:705 — Section/Home-Hero · 2323:975 Tablet · 2334:1555 Mobile
 import Image from 'next/image'
 import { altText } from '@/lib/altText'
+import heroClinic from './hero-clinic.jpg'
 
 const SUBTITLE_FULL =
   'A multi-specialty medical center serving international patients in Tijuana, Baja California: ' +
@@ -25,7 +26,7 @@ export default function HomeHero() {
     >
       {/* Background clinic photo at 30% opacity */}
       <Image
-        src="/photos/hero-clinic.jpg"
+        src={heroClinic}
         alt={altText.heroClinic}
         fill
         priority
