@@ -51,8 +51,7 @@ export const SITE = {
 
   // Display-ready "find us" links — para Footer
   sameAsLinks: [
-    { label: 'Google Maps',       href: 'https://maps.app.goo.gl/XcHtSmXG86e888GP7' },
-    { label: 'russaldclinic.com', href: 'https://russaldclinic.com' },
+    { label: 'Google Maps', href: 'https://maps.app.goo.gl/XcHtSmXG86e888GP7' },
   ] as const,
 
   specialties: [
@@ -72,6 +71,7 @@ export const SITE = {
     { name: 'Southern California, United States' },
     { name: 'Baja California, Mexico' },
     { name: 'Tijuana, Mexico' },
+    { name: 'Canada' },
   ] as const,
 
   // TODO: descomentar con horarios reales del GBP

@@ -29,7 +29,13 @@ export const metadata: Metadata = {
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
-  alternates: { canonical: '/' },
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en-US':    '/',
+      'x-default': '/',
+    },
+  },
   openGraph: {
     type:        'website',
     locale:      'en_US',
@@ -68,7 +74,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${rethinkSans.variable} ${nunitoSans.variable}`}>
+    <html lang="en-US" className={`${rethinkSans.variable} ${nunitoSans.variable}`}>
       <head>
         <JsonLd data={organizationSchema() as Record<string, unknown>} />
         {/* Geo meta tags — ayudan a crawlers locales y a Google Maps */}

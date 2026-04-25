@@ -119,7 +119,7 @@ export function medicalWebPageSchema(params: {
     name:         params.name,
     description:  params.description,
     url:          `${SITE.url}${params.path}`,
-    lastReviewed: params.lastReviewed ?? new Date().toISOString().split('T')[0],
+    lastReviewed: params.lastReviewed ?? '2026-04-25',
     reviewedBy: {
       '@type':          'MedicalOrganization',
       name:             SITE.name,

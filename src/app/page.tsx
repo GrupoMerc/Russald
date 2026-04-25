@@ -17,8 +17,8 @@ export const metadata: Metadata = {
     absolute: 'Russald Medical Center | World-Class Surgery in Tijuana, Mexico',
   },
   description:
-    'Multi-specialty surgical center in Tijuana, 20 min from San Diego. ' +
-    'Board-certified surgeons. Bariatric, plastic surgery, hair restoration & more. ' +
+    'Board-certified surgeons in Tijuana, 20 min from San Diego. ' +
+    'Weight loss, plastic surgery & hair restoration. ' +
     '60–75% less than US prices. Free evaluation.',
   alternates: { canonical: '/' },
   openGraph: {
