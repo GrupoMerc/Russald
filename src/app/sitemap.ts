@@ -31,9 +31,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // ── About / Soporte ───────────────────────────────────────────────────────
     { url: `${BASE}/medical-team`,      lastModified: DATES.support, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/our-patients`,      lastModified: DATES.support, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE}/patient-resources`, lastModified: DATES.support, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/patient-resources`, lastModified: DATES.support, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/our-facilities`,    lastModified: DATES.support, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/faq`,               lastModified: DATES.support, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/about`,             lastModified: DATES.support, changeFrequency: 'monthly', priority: 0.7 },
 
     // ── Legal ─────────────────────────────────────────────────────────────────
     { url: `${BASE}/legal/terms`,              lastModified: DATES.legal,      changeFrequency: 'yearly',  priority: 0.3 },
