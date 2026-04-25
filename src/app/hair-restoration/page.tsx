@@ -1,7 +1,7 @@
 import type { Metadata }  from 'next'
 import dynamic            from 'next/dynamic'
 import { hairData }       from '@/lib/pages/hairRestoration'
-import { procedureSchema, breadcrumbSchema, medicalWebPageSchema } from '@/lib/schema'
+import { procedureSchema, breadcrumbSchema, medicalWebPageSchema, faqSchema } from '@/lib/schema'
 import { JsonLd }         from '@/components/JsonLd'
 import { SITE }           from '@/config/site'
 
@@ -13,6 +13,7 @@ import SpecFactsStrip  from '@/components/sections/spec/SpecFactsStrip'
 const SpecIntro       = dynamic(() => import('@/components/sections/spec/SpecIntro'))
 const SpecWhy         = dynamic(() => import('@/components/sections/spec/SpecWhy'))
 const SpecProc        = dynamic(() => import('@/components/sections/spec/SpecProc'))
+const SpecFaq         = dynamic(() => import('@/components/sections/spec/SpecFaq'))
 const EvalFormSection = dynamic(() => import('@/components/sections/EvalFormSection'))
 const SpecFloatCta    = dynamic(() => import('@/components/sections/spec/SpecFloatCta'))
 
@@ -40,6 +41,7 @@ const webPage     = medicalWebPageSchema({
   path:        '/hair-restoration',
   specialty:   'Hair Restoration',
 })
+const faqLd       = faqSchema(hairData.faq.items)
 
 export default function HairRestorationPage() {
   return (
@@ -47,11 +49,13 @@ export default function HairRestorationPage() {
       <JsonLd data={jsonLd as Record<string, unknown>} />
       <JsonLd data={breadcrumbs as Record<string, unknown>} />
       <JsonLd data={webPage as Record<string, unknown>} />
+      <JsonLd data={faqLd as Record<string, unknown>} />
       <SpecHero       data={hairData.hero}   />
       <SpecFactsStrip facts={hairData.facts} />
       <SpecIntro      data={hairData.intro}  />
       <SpecWhy        data={hairData.why}    />
       <SpecProc       data={hairData.proc}   />
+      <SpecFaq        data={hairData.faq}    />
       <EvalFormSection />
       <SpecFloatCta />
     </>
