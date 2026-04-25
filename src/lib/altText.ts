@@ -5,6 +5,8 @@ export const altText = {
   facilityOR:        'State-of-the-art operating room at Russald Medical Center',
   clinicInterior:    'Clinic interior at Russald Medical Center, Tijuana',
   patientConsult:    'Patient consultation at Russald Medical Center',
+  heroClinic:        'Russald Medical Center reception — modern clinic in Tijuana, Mexico',
+  clinicInteriorCm3: 'Russald Medical Center clinic interior — reception area, Tijuana Mexico',
 } as const
 
 export type AltTextKey = keyof typeof altText

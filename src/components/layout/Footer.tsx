@@ -116,8 +116,10 @@ export default function Footer() {
           <p className="font-['Nunito_Sans',sans-serif] font-normal text-[0.6875rem] text-white/35 whitespace-nowrap">
             Tijuana, Mexico · Russald Medical S.A. de C.V.
           </p>
-          <p className="font-['Nunito_Sans',sans-serif] font-normal text-[0.75rem] text-white/40 whitespace-pre">
-            {`MEX: +52 (664) 906-92-68  |  US: +1 (858) 264-4121`}
+          <p className="font-['Nunito_Sans',sans-serif] font-normal text-[0.75rem] text-white/40">
+            <a href="tel:+526649069268" className="hover:text-white/70 transition-colors">MEX: +52 (664) 906-92-68</a>
+            {'  |  '}
+            <a href="tel:+18582644121" className="hover:text-white/70 transition-colors">US: +1 (858) 264-4121</a>
           </p>
           <div className="flex gap-4 mt-1" aria-label="Find us online">
             {SAME_AS.map(({ label, href }) => (
@@ -126,6 +128,7 @@ export default function Footer() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`${label} (opens in new window)`}
                 className={
                   'font-["Nunito_Sans",sans-serif] font-normal text-[0.6875rem] ' +
                   'text-[var(--color-blue-light)] hover:text-white transition-colors duration-150 ' +

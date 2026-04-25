@@ -1,78 +1,95 @@
 // Figma node: 2298:1011 — Section/Home-Procedures (Desktop) · 2330:1367 (Tablet) · 2337:2003 (Mobile)
+import Link from 'next/link'
 
-type Procedure = { name: string; subtitle: string; featured?: boolean }
-type SpecialtyGroup = { emoji: string; name: string; procedures: Procedure[] }
+type Procedure = { name: string; subtitle: string; href: string; featured?: boolean }
+type SpecialtyGroup = { emoji: string; name: string; href: string; procedures: Procedure[] }
 
 const specialties: SpecialtyGroup[] = [
   {
     emoji: '⚖️',
-    name: 'Weight Loss Surgery',
+    name:  'Weight Loss Surgery',
+    href:  '/weight-loss',
     procedures: [
-      { name: 'Gastric Sleeve',      subtitle: 'Weight Loss & Metabolic Surgery' },
-      { name: 'Gastric Bypass',      subtitle: 'Weight Loss & Metabolic Surgery' },
-      { name: 'Mini Gastric Bypass', subtitle: 'Weight Loss & Metabolic Surgery' },
-      { name: 'Lap-Band',            subtitle: 'Weight Loss & Metabolic Surgery' },
-      { name: 'Bariatric Revision',  subtitle: 'Weight Loss & Metabolic Surgery' },
+      { name: 'Gastric Sleeve',      subtitle: 'Weight Loss & Metabolic Surgery', href: '/weight-loss/gastric-sleeve' },
+      { name: 'Gastric Bypass',      subtitle: 'Weight Loss & Metabolic Surgery', href: '/weight-loss/gastric-bypass' },
+      { name: 'Mini Gastric Bypass', subtitle: 'Weight Loss & Metabolic Surgery', href: '/weight-loss/mini-gastric-bypass' },
+      { name: 'Lap-Band',            subtitle: 'Weight Loss & Metabolic Surgery', href: '/weight-loss/lap-band' },
+      { name: 'Bariatric Revision',  subtitle: 'Weight Loss & Metabolic Surgery', href: '/weight-loss/bariatric-revision' },
     ],
   },
   {
     emoji: '✨',
-    name: 'Plastic Surgery',
+    name:  'Plastic Surgery',
+    href:  '/plastic-surgery',
     procedures: [
-      { name: 'Mommy Makeover',             subtitle: 'Plastic & Reconstructive Surgery' },
-      { name: 'Tummy Tuck',                 subtitle: 'Plastic & Reconstructive Surgery' },
-      { name: 'Circular Tummy Tuck',        subtitle: 'Plastic & Reconstructive Surgery' },
-      { name: 'Liposuction',                subtitle: 'Plastic & Reconstructive Surgery' },
-      { name: 'Brazilian Butt Lift (BBL)',   subtitle: 'Plastic & Reconstructive Surgery' },
-      { name: 'Breast Augmentation',        subtitle: 'Plastic & Reconstructive Surgery' },
-      { name: 'Rhinoplasty',                subtitle: 'Plastic & Reconstructive Surgery' },
-      { name: 'Facelift',                   subtitle: 'Plastic & Reconstructive Surgery' },
-      { name: 'Arm Lift',                   subtitle: 'Plastic & Reconstructive Surgery' },
-      { name: 'Thigh Lift',                 subtitle: 'Plastic & Reconstructive Surgery' },
+      { name: 'Mommy Makeover',            subtitle: 'Plastic & Reconstructive Surgery', href: '/plastic-surgery/mommy-makeover' },
+      { name: 'Tummy Tuck',                subtitle: 'Plastic & Reconstructive Surgery', href: '/plastic-surgery/tummy-tuck' },
+      { name: 'Circular Tummy Tuck',       subtitle: 'Plastic & Reconstructive Surgery', href: '/plastic-surgery/circular-tummy-tuck' },
+      { name: 'Liposuction',               subtitle: 'Plastic & Reconstructive Surgery', href: '/plastic-surgery/liposuction' },
+      { name: 'Brazilian Butt Lift (BBL)', subtitle: 'Plastic & Reconstructive Surgery', href: '/plastic-surgery/bbl' },
+      { name: 'Breast Augmentation',       subtitle: 'Plastic & Reconstructive Surgery', href: '/plastic-surgery/breast-augmentation' },
+      { name: 'Rhinoplasty',               subtitle: 'Plastic & Reconstructive Surgery', href: '/plastic-surgery/rhinoplasty' },
+      { name: 'Facelift',                  subtitle: 'Plastic & Reconstructive Surgery', href: '/plastic-surgery/facelift' },
+      { name: 'Arm Lift',                  subtitle: 'Plastic & Reconstructive Surgery', href: '/plastic-surgery/arm-lift' },
+      { name: 'Thigh Lift',                subtitle: 'Plastic & Reconstructive Surgery', href: '/plastic-surgery/thigh-lift' },
     ],
   },
   {
     emoji: '💆',
-    name: 'Hair Restoration',
+    name:  'Hair Restoration',
+    href:  '/hair-restoration',
     procedures: [
-      { name: 'FUE Hair Transplant', subtitle: 'Hair Restoration' },
-      { name: 'DHI Hair Transplant', subtitle: 'Hair Restoration' },
-      { name: 'Hair PRP',            subtitle: 'Hair Restoration' },
+      { name: 'FUE Hair Transplant', subtitle: 'Hair Restoration', href: '/hair-restoration/fue' },
+      { name: 'DHI Hair Transplant', subtitle: 'Hair Restoration', href: '/hair-restoration/dhi' },
+      { name: 'Hair PRP',            subtitle: 'Hair Restoration', href: '/hair-restoration/prp' },
     ],
   },
   {
     emoji: '💪',
-    name: "Men's Health",
+    name:  "Men's Health",
+    href:  '/mens-health',
     procedures: [
-      { name: 'Male Enhancement Implant',       subtitle: "Men's Health & Urology",                   featured: true },
-      { name: 'Erectile Dysfunction Treatment', subtitle: "Men's Health & Urology" },
-      { name: 'Testosterone Replacement Therapy', subtitle: 'Bio Optimization & Performance Medicine' },
+      { name: 'Male Enhancement Implant',        subtitle: "Men's Health & Urology",                   href: '/mens-health/implant',             featured: true },
+      { name: 'Erectile Dysfunction Treatment',  subtitle: "Men's Health & Urology",                   href: '/mens-health/erectile-dysfunction' },
+      { name: 'Testosterone Replacement Therapy', subtitle: 'Bio Optimization & Performance Medicine', href: '/mens-health/testosterone' },
     ],
   },
   {
     emoji: '🩸',
-    name: 'Vascular Care',
+    name:  'Vascular Care',
+    href:  '/vascular-care',
     procedures: [
-      { name: 'EVLA (Varicose Veins)', subtitle: 'Vascular Care' },
-      { name: 'Sclerotherapy',         subtitle: 'Vascular Care' },
+      { name: 'EVLA (Varicose Veins)', subtitle: 'Vascular Care', href: '/vascular-care/evla' },
+      { name: 'Sclerotherapy',         subtitle: 'Vascular Care', href: '/vascular-care/sclerotherapy' },
     ],
   },
   {
     emoji: '⚗️',
-    name: 'Bio Optimization',
+    name:  'Bio Optimization',
+    href:  '/bio-optimization',
     procedures: [
-      { name: 'HGH Therapy',      subtitle: 'Bio Optimization & Performance Medicine' },
-      { name: 'BHRT',             subtitle: 'Bio Optimization & Performance Medicine' },
-      { name: 'Myers Cocktail IV', subtitle: 'Bio Optimization & Performance Medicine' },
+      { name: 'HGH Therapy',       subtitle: 'Bio Optimization & Performance Medicine', href: '/bio-optimization/hgh' },
+      { name: 'BHRT',              subtitle: 'Bio Optimization & Performance Medicine', href: '/bio-optimization/bhrt' },
+      { name: 'Myers Cocktail IV', subtitle: 'Bio Optimization & Performance Medicine', href: '/bio-optimization/myers-cocktail' },
     ],
   },
 ]
 
+const cardBase =
+  'flex items-center gap-3 rounded-[8px] border border-[var(--color-border)] bg-[var(--color-white)] p-4 shadow-[0px_1px_3px_0px_rgba(15,28,63,0.08)] ' +
+  'transition-shadow hover:shadow-[0px_4px_12px_0px_rgba(15,28,63,0.12)] hover:border-[var(--color-blue)]/30 ' +
+  'focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]'
+
 function ProcedureCard({ proc, emoji }: { proc: Procedure; emoji: string }) {
   if (proc.featured) {
     return (
-      <div
-        className="overflow-hidden rounded-[8px] shadow-[0px_1px_3px_0px_rgba(15,28,63,0.08)]"
+      <Link
+        href={proc.href}
+        className={
+          'overflow-hidden rounded-[8px] shadow-[0px_1px_3px_0px_rgba(15,28,63,0.08)] block ' +
+          'transition-shadow hover:shadow-[0px_4px_16px_0px_rgba(181,134,42,0.25)] ' +
+          'focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]'
+        }
         style={{
           backgroundImage:
             'linear-gradient(15.79deg, rgb(13,27,53) 39.675%, rgb(7,30,22) 110.4%)',
@@ -82,7 +99,7 @@ function ProcedureCard({ proc, emoji }: { proc: Procedure; emoji: string }) {
         {/* Gold → blue accent */}
         <div
           className="h-[2px] w-full"
-          style={{ backgroundImage: 'linear-gradient(to right, #b5862a, #2563eb)' }}
+          style={{ backgroundImage: 'linear-gradient(to right, #b5862a, var(--color-blue))' }}
           aria-hidden="true"
         />
         <div className="flex items-center gap-3 px-4 py-[0.875rem]">
@@ -109,12 +126,12 @@ function ProcedureCard({ proc, emoji }: { proc: Procedure; emoji: string }) {
             </span>
           </div>
         </div>
-      </div>
+      </Link>
     )
   }
 
   return (
-    <div className="flex items-center gap-3 rounded-[8px] border border-[var(--color-border)] bg-[var(--color-white)] p-4 shadow-[0px_1px_3px_0px_rgba(15,28,63,0.08)]">
+    <Link href={proc.href} className={cardBase}>
       <span className="shrink-0 text-[1.25rem]" aria-hidden="true">{emoji}</span>
       <div className="flex min-w-0 flex-1 flex-col gap-[2px]">
         <span className="font-['Nunito_Sans',sans-serif] text-[0.84375rem] font-bold leading-[1.3] text-[var(--color-navy)]">
@@ -124,7 +141,7 @@ function ProcedureCard({ proc, emoji }: { proc: Procedure; emoji: string }) {
           {proc.subtitle}
         </span>
       </div>
-    </div>
+    </Link>
   )
 }
 
@@ -138,7 +155,7 @@ export default function HomeProcedures() {
 
         {/* ── Header ── */}
         <div className="flex flex-col items-center">
-          <p className="text-center font-['Nunito_Sans',sans-serif] text-[0.656rem] font-bold uppercase tracking-[1.89px] text-[var(--color-blue-action)]">
+          <p className="text-center font-['Nunito_Sans',sans-serif] text-[0.656rem] font-bold uppercase tracking-[1.89px] text-[var(--color-blue)]">
             Browse All Procedures
           </p>
           <div className="h-[10px]" />
@@ -147,10 +164,10 @@ export default function HomeProcedures() {
             className="text-center font-['Rethink_Sans',sans-serif] text-[1.5rem] font-bold leading-normal tracking-[-0.005em] sm:text-[1.875rem]"
           >
             <span className="text-[var(--color-charcoal)]">Find Your </span>
-            <span className="italic text-[var(--color-blue-action)]">Procedure</span>
+            <span className="italic text-[var(--color-blue)]">Procedure</span>
           </h2>
           <div className="h-3 sm:h-[14px]" />
-          <div className="h-[3px] w-9 rounded-[2px] bg-[var(--color-blue-action)]" />
+          <div className="h-[3px] w-9 rounded-[2px] bg-[var(--color-navy)]" />
           <div className="h-4 sm:h-5" />
           <p className="max-w-[600px] text-center font-['Nunito_Sans',sans-serif] text-[0.875rem] font-normal leading-[1.75] text-[var(--color-muted)] sm:text-[0.9375rem]">
             Every procedure page includes full clinical information, candidacy criteria, the
@@ -165,9 +182,12 @@ export default function HomeProcedures() {
             {/* Group header */}
             <div className="flex items-center gap-3 border-b-2 border-[var(--color-border)] pb-3">
               <span className="text-[1.375rem]" aria-hidden="true">{group.emoji}</span>
-              <h3 className="font-['Rethink_Sans',sans-serif] text-[1.25rem] font-bold text-[var(--color-navy)] sm:text-[1.5rem]">
+              <Link
+                href={group.href}
+                className="font-['Rethink_Sans',sans-serif] text-[1.25rem] font-bold text-[var(--color-navy)] hover:text-[var(--color-blue)] transition-colors sm:text-[1.5rem] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]"
+              >
                 {group.name}
-              </h3>
+              </Link>
             </div>
             {/* Procedure cards — 1 col mobile · 2 col tablet · 4 col desktop */}
             <div className="grid grid-cols-1 gap-[10px] sm:grid-cols-2 lg:grid-cols-4">

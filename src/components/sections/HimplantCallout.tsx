@@ -2,7 +2,7 @@
 
 export default function HimplantCallout() {
   return (
-    <section className="flex flex-col items-center bg-[var(--color-white)] px-6 pt-8 pb-[3.25rem] sm:px-0">
+    <section aria-labelledby="himplant-heading" className="flex flex-col items-center bg-[var(--color-white)] px-6 pt-8 pb-[3.25rem] sm:px-0">
       {/* Card — full-width on mobile, max-w constrained on sm/lg */}
       <div
         className="w-full overflow-hidden rounded-[14px] sm:max-w-[786px] lg:max-w-[980px]"
@@ -30,24 +30,20 @@ export default function HimplantCallout() {
             <div
               className="inline-flex shrink-0 items-center gap-[7px] self-start rounded-[20px] px-[0.875rem] py-[0.375rem]"
               style={{
-                backgroundColor: 'rgba(181,134,42,0.12)',
-                border: '1px solid rgba(181,134,42,0.35)',
+                backgroundColor: 'rgba(255,255,255,0.12)',
+                border: '1px solid rgba(255,255,255,0.35)',
               }}
             >
               <span
-                className="size-[6px] shrink-0 rounded-full"
-                style={{ backgroundColor: 'rgb(201,151,58)' }}
+                className="size-[6px] shrink-0 rounded-full bg-white"
                 aria-hidden="true"
               />
-              <span
-                className="whitespace-nowrap font-['Nunito_Sans',sans-serif] text-[0.594rem] font-extrabold uppercase tracking-[1.52px] sm:text-[0.656rem] sm:tracking-[1.89px]"
-                style={{ color: 'rgb(201,151,58)' }}
-              >
+              <span className="whitespace-nowrap font-['Nunito_Sans',sans-serif] text-[0.594rem] font-extrabold uppercase tracking-[1.52px] text-white sm:text-[0.656rem] sm:tracking-[1.89px]">
                 Featured Procedure · Men&apos;s Health
               </span>
             </div>
 
-            <h2 className="font-['Rethink_Sans',sans-serif] text-[1.1875rem] font-bold leading-[1.25] text-[var(--color-white)] sm:text-[1.3125rem] sm:leading-[1.2]">
+            <h2 id="himplant-heading" className="font-['Rethink_Sans',sans-serif] text-[1.1875rem] font-bold leading-[1.25] text-[var(--color-white)] sm:text-[1.3125rem] sm:leading-[1.2]">
               Male Enhancement Implant: Permanent, FDA-Cleared Girth Enhancement
             </h2>
 
@@ -60,13 +56,9 @@ export default function HimplantCallout() {
 
           {/* Gold CTA — full-width mobile, shrink-0 auto-width on sm+ */}
           <a
-            href="#evaluation"
-            className="flex min-h-[48px] w-full shrink-0 items-center justify-center rounded-[6px] px-[1.375rem] py-[0.875rem] font-['Nunito_Sans',sans-serif] text-[0.8125rem] font-bold tracking-[0.39px] text-[var(--color-white)] whitespace-nowrap focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)] sm:w-auto"
-            style={{
-              backgroundImage:
-                'linear-gradient(11.51deg, rgb(181,134,42) 39.675%, rgb(201,151,58) 110.4%)',
-              boxShadow: '0px 4px 14px 0px rgba(181,134,42,0.28)',
-            }}
+            href="#eval-form"
+            className="flex min-h-[48px] w-full shrink-0 items-center justify-center rounded-[6px] bg-[var(--color-blue)] px-[1.375rem] py-[0.875rem] font-['Nunito_Sans',sans-serif] text-[0.8125rem] font-bold tracking-[0.39px] text-[var(--color-white)] whitespace-nowrap focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)] sm:w-auto"
+            style={{ boxShadow: '0px 4px 14px 0px rgba(181,134,42,0.28)' }}
           >
             Learn About HIMPLANT →
           </a>

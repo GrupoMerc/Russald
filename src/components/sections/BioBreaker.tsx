@@ -1,4 +1,5 @@
 // Figma node: 2298:875 — Section/Bio-Breaker (Desktop) · 2330:1233 (Tablet) · 2337:1871 (Mobile)
+import Link from 'next/link'
 import Button from '@/components/ui/Button'
 
 const pills = [
@@ -30,7 +31,7 @@ export default function BioBreaker() {
     <section
       aria-labelledby="bio-breaker-heading"
       className="flex flex-col items-center px-4 py-10 sm:px-5 sm:py-[3.25rem] lg:px-6 lg:py-20"
-      style={{ backgroundImage: 'linear-gradient(8.79deg, rgb(15,28,63) 47.66%, rgb(30,58,138) 125.66%)' }}
+      style={{ backgroundImage: 'linear-gradient(23.03deg, rgb(48,137,226) 39.645%, rgb(255,255,255) 110.36%)' }}
     >
       <div className="flex w-full max-w-[980px] flex-col gap-8 lg:flex-row lg:items-center lg:gap-16">
 
@@ -78,7 +79,7 @@ export default function BioBreaker() {
 
           <div className="h-7" />
 
-          <Button href="#evaluation" variant="primary" size="md">
+          <Button href="#eval-form" variant="primary" size="md">
             Explore Protocols →
           </Button>
         </div>
@@ -107,9 +108,12 @@ export default function BioBreaker() {
             ))}
           </div>
 
-          <p className="text-right font-['Nunito_Sans',sans-serif] text-[0.719rem] font-normal text-[rgba(255,255,255,0.35)]">
+          <Link
+            href="/bio-optimization"
+            className="text-right font-['Nunito_Sans',sans-serif] text-[0.719rem] font-normal text-[rgba(255,255,255,0.35)] hover:text-[rgba(255,255,255,0.65)] transition-colors focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]"
+          >
             + 5 more protocols · View all →
-          </p>
+          </Link>
         </div>
 
       </div>

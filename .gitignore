@@ -29,6 +29,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# raw Figma exports — optimize with: npm run img
+/public/photos/raw/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.vercel
