@@ -54,10 +54,22 @@ export interface SpecProcData {
   readonly procedures: ReadonlyArray<SpecProcItem>
 }
 
+export interface SpecFaqItem {
+  readonly q: string
+  readonly a: string
+}
+
+export interface SpecFaqData {
+  readonly eyebrow: string
+  readonly heading: string
+  readonly items: ReadonlyArray<SpecFaqItem>
+}
+
 export interface SpecPageData {
   readonly hero: SpecHeroData
   readonly facts: ReadonlyArray<SpecFact>
   readonly intro: SpecIntroData
   readonly why: SpecWhyData
   readonly proc: SpecProcData
+  readonly faq: SpecFaqData
 }

@@ -109,4 +109,35 @@ export const plasticData = {
       { icon: '🌟', title: 'Mommy Makeover',         category: 'Combined Procedures',   href: '/plastic-surgery/mommy-makeover'       },
     ],
   },
+
+  faq: {
+    eyebrow: 'Frequently Asked Questions',
+    heading: 'Plastic Surgery in Tijuana — Common Questions',
+    items: [
+      {
+        q: 'How much does plastic surgery cost in Tijuana compared to the United States?',
+        a: 'Plastic surgery procedures at Russald Medical Center cost 60–75% less than comparable procedures in the US. Prices vary by procedure and clinical complexity — your coordinator provides a detailed quote after your evaluation. There are no hidden facility fees.',
+      },
+      {
+        q: 'Are the surgeons at Russald Medical Center board-certified?',
+        a: 'Yes. Our plastic surgeons are certified by the Mexican Council of Plastic, Aesthetic, and Reconstructive Surgery (CMCPER) — the Mexican equivalent of the American Board of Plastic Surgery. They hold additional fellowship training and have performed thousands of procedures combined.',
+      },
+      {
+        q: 'Is it safe to have plastic surgery in Mexico?',
+        a: 'Safety depends on the facility and surgical team, not the country. Russald Medical Center operates in a fully equipped surgical suite, requires a pre-operative workup for every patient, and follows structured post-operative protocols. We do not perform same-day surgery without appropriate clinical evaluation.',
+      },
+      {
+        q: 'How long do I need to stay in Tijuana after plastic surgery?',
+        a: 'Recovery time varies by procedure. Most patients stay 3–7 days following the surgery before returning home. Your coordinator provides a specific timeline based on your procedure and recovery progress. You will receive written discharge instructions before you leave.',
+      },
+      {
+        q: 'Can I combine multiple procedures in one visit?',
+        a: 'Yes — combining procedures such as liposuction and tummy tuck, or breast augmentation with a lift, is common and reduces total downtime. Your surgeon will evaluate the safety of combining procedures based on anesthesia time, your health status, and recovery considerations. Not all combinations are appropriate for every patient.',
+      },
+      {
+        q: 'Will my results look natural?',
+        a: 'Natural-looking results depend on the surgical plan, technique, and the skill of the surgeon. At Russald Medical Center, your surgeon reviews your goals during the consultation and explains what is anatomically achievable. We do not use a one-size-fits-all approach — your proportions, existing tissue, and desired outcome all factor into the surgical plan.',
+      },
+    ],
+  },
 } satisfies SpecPageData

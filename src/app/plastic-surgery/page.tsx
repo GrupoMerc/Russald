@@ -1,7 +1,9 @@
 import type { Metadata }  from 'next'
 import dynamic            from 'next/dynamic'
 import { plasticData }    from '@/lib/pages/plasticSurgery'
-import { procedureSchema, breadcrumbSchema, medicalWebPageSchema } from '@/lib/schema'
+import { procedureSchema, breadcrumbSchema, medicalWebPageSchema, faqSchema } from '@/lib/schema'
+import { JsonLd }         from '@/components/JsonLd'
+import { SITE }           from '@/config/site'
 
 // Static — above the fold (LCP)
 import SpecHero        from '@/components/sections/spec/SpecHero'
@@ -11,6 +13,7 @@ import SpecFactsStrip  from '@/components/sections/spec/SpecFactsStrip'
 const SpecIntro       = dynamic(() => import('@/components/sections/spec/SpecIntro'))
 const SpecWhy         = dynamic(() => import('@/components/sections/spec/SpecWhy'))
 const SpecProc        = dynamic(() => import('@/components/sections/spec/SpecProc'))
+const SpecFaq         = dynamic(() => import('@/components/sections/spec/SpecFaq'))
 const EvalFormSection = dynamic(() => import('@/components/sections/EvalFormSection'))
 const SpecFloatCta    = dynamic(() => import('@/components/sections/spec/SpecFloatCta'))
 
@@ -28,8 +31,8 @@ export const metadata: Metadata = {
 
 const jsonLd      = procedureSchema('Plastic Surgery', plasticData.intro.paragraphs[0], '/plastic-surgery')
 const breadcrumbs = breadcrumbSchema([
-  { name: 'Home',            url: 'https://russaldmedical.com' },
-  { name: 'Plastic Surgery', url: 'https://russaldmedical.com/plastic-surgery' },
+  { name: 'Home',            url: SITE.url },
+  { name: 'Plastic Surgery', url: `${SITE.url}/plastic-surgery` },
 ])
 const webPage     = medicalWebPageSchema({
   name:        'Plastic Surgery in Tijuana, Mexico',
@@ -37,18 +40,21 @@ const webPage     = medicalWebPageSchema({
   path:        '/plastic-surgery',
   specialty:   'Plastic Surgery',
 })
+const faqLd       = faqSchema(plasticData.faq.items)
 
 export default function PlasticSurgeryPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPage) }} />
+      <JsonLd data={jsonLd as Record<string, unknown>} />
+      <JsonLd data={breadcrumbs as Record<string, unknown>} />
+      <JsonLd data={webPage as Record<string, unknown>} />
+      <JsonLd data={faqLd as Record<string, unknown>} />
       <SpecHero       data={plasticData.hero}   />
       <SpecFactsStrip facts={plasticData.facts} />
       <SpecIntro      data={plasticData.intro}  />
       <SpecWhy        data={plasticData.why}    />
       <SpecProc       data={plasticData.proc}   />
+      <SpecFaq        data={plasticData.faq}    />
       <EvalFormSection />
       <SpecFloatCta />
     </>

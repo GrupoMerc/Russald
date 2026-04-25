@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import EvaluationForm from '@/components/EvaluationForm'
+import { JsonLd } from '@/components/JsonLd'
 import { contactPageSchema } from '@/lib/schema'
 
 const jsonLd = contactPageSchema()
@@ -19,19 +20,12 @@ export const metadata: Metadata = {
 export default function FreeEvaluationPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <main
-        id="main-content"
-        role="main"
-        className="min-h-screen w-full bg-[var(--color-ice)] px-4 py-12 sm:px-8 sm:py-16"
-      >
+      <JsonLd data={jsonLd as Record<string, unknown>} />
+      <div className="min-h-screen w-full bg-[var(--color-ice)] px-4 py-12 sm:px-8 sm:py-16">
         <div className="mx-auto w-full max-w-[580px]">
           <EvaluationForm showHeader />
         </div>
-      </main>
+      </div>
     </>
   )
 }
