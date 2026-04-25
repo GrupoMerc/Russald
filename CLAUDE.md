@@ -544,7 +544,7 @@ LEADS_ENABLED=true   → main únicamente, cuando el equipo confirme el URL
 | Tarea | Estado | Notas |
 |---|---|---|
 | `/mens-health` page | En QA — revisar visualmente | Contenido del HTML vFinal |
-| `/vascular-care` page | Pendiente | |
+| `/vascular-care` page | En QA — revisar visualmente | Contenido del HTML vFinal |
 | `/bio-optimization` page | Pendiente | |
 | `/about` full | Pendiente | Placeholder Coming Soon listo |
 | `og-image.jpg` 1200×630 | Pendiente | Necesita diseño — actualmente usa placeholder |
