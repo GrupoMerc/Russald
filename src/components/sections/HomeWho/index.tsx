@@ -99,6 +99,7 @@ export default function HomeWho() {
               src={clinicInterior}
               alt={altText.clinicInteriorCm3}
               fill
+              priority
               sizes="(max-width: 1024px) 100vw, 458px"
               className="object-cover"
             />

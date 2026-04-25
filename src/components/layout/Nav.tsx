@@ -74,13 +74,10 @@ export default function Nav() {
           href="/"
           onClick={close}
           aria-label="Russald Medical Center — home"
-          className={[
-            'font-["Rethink_Sans",sans-serif] font-bold text-[1.125rem] leading-[1.375rem]',
-            'text-[var(--color-navy)] whitespace-nowrap',
-            'focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]',
-          ].join(' ')}
+          className="focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]"
         >
-          Russald Medical Center
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Russald Medical Center" width={130} height={33} fetchPriority="high" />
         </Link>
 
         <button
@@ -127,12 +124,9 @@ export default function Nav() {
               href="/"
               onClick={close}
               aria-label="Russald Medical Center — home"
-              className={[
-                'font-["Rethink_Sans",sans-serif] font-bold text-[1.125rem] leading-[1.375rem]',
-                'text-[var(--color-navy)] whitespace-nowrap',
-              ].join(' ')}
             >
-              Russald Medical Center
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Russald Medical Center" width={130} height={33} />
             </Link>
             <button
               type="button"
