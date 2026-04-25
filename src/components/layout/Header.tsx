@@ -2,6 +2,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import Nav from './Nav'
 
@@ -134,25 +135,15 @@ export default function Header() {
       >
         <Link
           href="/"
-          className="flex flex-col gap-[2px] no-underline"
           aria-label="Russald Medical Center — home"
         >
-          <span
-            className={
-              'font-["Rethink_Sans",sans-serif] font-bold text-[1.375rem] ' +
-              'text-[var(--color-navy)] leading-6 whitespace-nowrap'
-            }
-          >
-            Russald Medical Center
-          </span>
-          <span
-            className={
-              'font-["Nunito_Sans",sans-serif] font-bold text-[0.625rem] ' +
-              'text-[var(--color-blue)] tracking-[1.8px] uppercase'
-            }
-          >
-            Tijuana, Mexico
-          </span>
+          <Image
+            src="/logo.webp"
+            alt="Russald Medical Center"
+            width={173}
+            height={44}
+            priority
+          />
         </Link>
 
         <Link
