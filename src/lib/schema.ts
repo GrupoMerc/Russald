@@ -7,7 +7,6 @@ import { SITE } from '@/config/site'
 
 // ── 1. Global @graph (layout.tsx) ───────────────────────────────────────────
 // WebSite + Organization + MedicalBusiness con @id para referencias cruzadas.
-// TODO antes de producción: completar openingHoursSpecification en SITE.
 export function organizationSchema() {
   return {
     '@context': 'https://schema.org',
@@ -63,6 +62,12 @@ export function organizationSchema() {
           longitude:  SITE.geo.longitude,
         },
         hasMap:      SITE.mapsUrl,
+        openingHoursSpecification: SITE.openingHours.map(h => ({
+          '@type':    'OpeningHoursSpecification',
+          dayOfWeek:  h.dayOfWeek,
+          opens:      h.opens,
+          closes:     h.closes,
+        })),
         areaServed: [
           { '@type': 'Country',             name: 'United States' },
           { '@type': 'Country',             name: 'Canada' },

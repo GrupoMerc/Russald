@@ -78,11 +78,9 @@ export const SITE = {
     { name: 'Canada' },
   ] as const,
 
-  // TODO: descomentar con horarios reales del GBP
-  // openingHours: [
-  //   { dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '09:00', closes: '18:00' },
-  //   { dayOfWeek: ['Saturday'], opens: '09:00', closes: '14:00' },
-  // ],
+  openingHours: [
+    { dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'], opens: '09:00', closes: '20:00' },
+  ] as const,
 
   og: {
     image:    '/og-image.jpg',
