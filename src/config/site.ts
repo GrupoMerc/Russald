@@ -37,15 +37,19 @@ export const SITE = {
     { href: 'tel:+18582644121',  label: 'US: +1 (858) 264-4121' },
   ] as const,
 
-  // TODO: verificar que estas URLs sean los perfiles oficiales antes de producción
   social: {
-    instagram: 'https://www.instagram.com/russaldmedical',
-    facebook:  'https://www.facebook.com/russaldmedical',
-    youtube:   'https://www.youtube.com/@russaldmedical',
+    facebook:  'https://www.facebook.com/RussaldMedical/',
+    instagram: 'https://www.instagram.com/russald_medical/',
+    youtube:   'https://www.youtube.com/@RussaldMedical',
+    tiktok:    'https://www.tiktok.com/@russaldmedical',
   } as const,
 
   sameAs: [
     'https://maps.app.goo.gl/XcHtSmXG86e888GP7',
+    'https://www.facebook.com/RussaldMedical/',
+    'https://www.instagram.com/russald_medical/',
+    'https://www.youtube.com/@RussaldMedical',
+    'https://www.tiktok.com/@russaldmedical',
     'https://russaldclinic.com',
   ] as const,
 
