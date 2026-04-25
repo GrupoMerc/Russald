@@ -1,6 +1,6 @@
 import type { Metadata }  from 'next'
 import dynamic            from 'next/dynamic'
-import { wlsData }        from '@/lib/pages/weightLoss'
+import { bioData }        from '@/lib/pages/bioOptimization'
 import { procedureSchema, breadcrumbSchema, medicalWebPageSchema, faqSchema } from '@/lib/schema'
 import { JsonLd }         from '@/components/JsonLd'
 import { SITE }           from '@/config/site'
@@ -18,43 +18,44 @@ const EvalFormSection = dynamic(() => import('@/components/sections/EvalFormSect
 const SpecFloatCta    = dynamic(() => import('@/components/sections/spec/SpecFloatCta'))
 
 export const metadata: Metadata = {
-  title: 'Weight Loss Surgery in Tijuana, Mexico',
+  title: 'Bio Optimization in Tijuana, Mexico',
   description:
-    'Gastric sleeve, gastric bypass, mini bypass, Lap-Band & revision surgery — 65–75% less than US prices, 20 minutes from San Diego. Fellowship-trained bariatric surgeons at Russald Medical Center.',
-  alternates: { canonical: '/weight-loss' },
+    'Personalized bio optimization protocols — hormone therapy, IV therapy, regenerative medicine & aesthetic treatments. ' +
+    '60–75% less than US longevity clinics. 20 minutes from San Diego. Russald Medical Center.',
+  alternates: { canonical: '/bio-optimization' },
   openGraph: {
-    title:       'Weight Loss Surgery in Tijuana | Russald Medical Center',
-    description: 'Gastric sleeve, gastric bypass, mini bypass, Lap-Band & revision surgery — 65–75% less than US prices, 20 minutes from San Diego.',
-    url:         '/weight-loss',
+    title:       'Bio Optimization in Tijuana | Russald Medical Center',
+    description: 'Personalized bio optimization protocols — hormone therapy, IV therapy & regenerative medicine. 60–75% less than US longevity clinics, 20 minutes from San Diego.',
+    url:         '/bio-optimization',
   },
 }
 
-const jsonLd      = procedureSchema('Weight Loss Surgery', wlsData.intro.paragraphs[0], '/weight-loss')
+const jsonLd      = procedureSchema('Bio Optimization', bioData.intro.paragraphs[0], '/bio-optimization')
 const breadcrumbs = breadcrumbSchema([
-  { name: 'Home',                url: SITE.url },
-  { name: 'Weight Loss Surgery', url: `${SITE.url}/weight-loss` },
+  { name: 'Home',             url: SITE.url },
+  { name: 'Bio Optimization', url: `${SITE.url}/bio-optimization` },
 ])
 const webPage     = medicalWebPageSchema({
-  name:        'Weight Loss Surgery in Tijuana, Mexico',
-  description: wlsData.intro.paragraphs[0],
-  path:        '/weight-loss',
-  specialty:   'Bariatric Surgery',
+  name:        'Bio Optimization in Tijuana, Mexico',
+  description: bioData.intro.paragraphs[0],
+  path:        '/bio-optimization',
+  specialty:   'Preventive Medicine',
 })
-const faqLd       = faqSchema(wlsData.faq.items)
+const faqLd       = faqSchema(bioData.faq.items)
 
-export default function WeightLossSurgeryPage() {
+export default function BioOptimizationPage() {
   return (
     <>
       <JsonLd data={jsonLd as Record<string, unknown>} />
       <JsonLd data={breadcrumbs as Record<string, unknown>} />
       <JsonLd data={webPage as Record<string, unknown>} />
       <JsonLd data={faqLd as Record<string, unknown>} />
-      <SpecHero       data={wlsData.hero}   />
-      <SpecFactsStrip facts={wlsData.facts} />
-      <SpecIntro      data={wlsData.intro}  />
-      <SpecWhy        data={wlsData.why}    />
-      <SpecProc       data={wlsData.proc}   />
-      <SpecFaq        data={wlsData.faq}    />
+      <SpecHero       data={bioData.hero}   />
+      <SpecFactsStrip facts={bioData.facts} />
+      <SpecIntro      data={bioData.intro}  />
+      <SpecWhy        data={bioData.why}    />
+      <SpecProc       data={bioData.proc}   />
+      <SpecFaq        data={bioData.faq}    />
       <EvalFormSection />
       <SpecFloatCta />
     </>

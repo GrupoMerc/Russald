@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
+import { SITE } from '@/config/site'
 
-const BASE   = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://russaldmedical.com'
-const IS_PROD = BASE === 'https://russaldmedical.com'
+const IS_PROD = SITE.url === 'https://russaldmedical.com'
 
 export default function robots(): MetadataRoute.Robots {
   if (!IS_PROD) {
@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
   }
   return {
     rules: { userAgent: '*', allow: '/', disallow: '/api/' },
-    sitemap: `${BASE}/sitemap.xml`,
+    sitemap: `${SITE.url}/sitemap.xml`,
   }
 }

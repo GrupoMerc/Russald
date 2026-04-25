@@ -10,14 +10,20 @@ import HomeJourney from '@/components/sections/HomeJourney'
 import HomeProcedures from '@/components/sections/HomeProcedures'
 import EvalFormSection from '@/components/sections/EvalFormSection'
 
+// Absolute title — evita el template '%s | Russald Medical Center' en home
+// para no duplicar el nombre de marca en la misma línea
 export const metadata: Metadata = {
-  title: 'World-Class Surgery in Tijuana, Mexico — 20 Min from San Diego',
+  title: {
+    absolute: 'Russald Medical Center | World-Class Surgery in Tijuana, Mexico',
+  },
   description:
-    'Board-certified surgeons in Tijuana. Weight loss surgery, plastic surgery, hair restoration & more — 60–75% less than US prices. Free clinical evaluation.',
+    'Board-certified surgeons in Tijuana, 20 min from San Diego. ' +
+    'Weight loss, plastic surgery & hair restoration. ' +
+    '60–75% less than US prices. Free evaluation.',
   alternates: { canonical: '/' },
   openGraph: {
-    title:       'Russald Medical Center — World-Class Surgery in Tijuana, Mexico',
-    description: 'Board-certified surgeons in Tijuana. Weight loss surgery, plastic surgery, hair restoration & more — 60–75% less than US prices.',
+    title:       'Russald Medical Center | World-Class Surgery in Tijuana, Mexico',
+    description: 'Board-certified surgeons in Tijuana. 60–75% less than US prices. Free evaluation.',
     url:         '/',
   },
 }
