@@ -533,3 +533,20 @@ feat/[componente] → trabajo individual
 LEADS_ENABLED=false  → dev y local → dry-run (console.log)
 LEADS_ENABLED=true   → main únicamente, cuando el equipo confirme el URL
 ```
+
+---
+
+## 18. Backlog
+
+> Regla: solo tareas pendientes — las terminadas se eliminan. El historial queda en `git log`.
+> Actualizar al cerrar cada sesión de trabajo.
+
+| Tarea | Estado | Notas |
+|---|---|---|
+| `/mens-health` page | Pendiente | Siguiente prioridad — aparece en nav y HomeSpecialties |
+| `/vascular-care` page | Pendiente | |
+| `/bio-optimization` page | Pendiente | |
+| `/about` full | Pendiente | Placeholder Coming Soon listo |
+| `og-image.jpg` 1200×630 | Pendiente | Necesita diseño — actualmente usa placeholder |
+| Trustpilot / RealSelf en `sameAs` | Pendiente | Agregar a `site.ts` cuando haya perfil verificado |
+| `qa` → `main` merge | Listo para merge | Revisar QA staging primero |
