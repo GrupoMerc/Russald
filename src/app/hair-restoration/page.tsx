@@ -1,6 +1,6 @@
 import type { Metadata }  from 'next'
 import dynamic            from 'next/dynamic'
-import { wlsData }        from '@/lib/pages/weightLoss'
+import { hairData }       from '@/lib/pages/hairRestoration'
 import { procedureSchema, breadcrumbSchema, medicalWebPageSchema } from '@/lib/schema'
 import { JsonLd }         from '@/components/JsonLd'
 import { SITE }           from '@/config/site'
@@ -17,40 +17,41 @@ const EvalFormSection = dynamic(() => import('@/components/sections/EvalFormSect
 const SpecFloatCta    = dynamic(() => import('@/components/sections/spec/SpecFloatCta'))
 
 export const metadata: Metadata = {
-  title: 'Weight Loss Surgery in Tijuana, Mexico',
+  title: 'Hair Restoration in Tijuana, Mexico',
   description:
-    'Gastric sleeve, gastric bypass, mini bypass, Lap-Band & revision surgery — 65–75% less than US prices, 20 minutes from San Diego. Fellowship-trained bariatric surgeons at Russald Medical Center.',
-  alternates: { canonical: '/weight-loss' },
+    'FUE & DHI hair transplant surgery in Tijuana — 60–70% less than US prices, 20 minutes from San Diego. ' +
+    'No linear scar, permanent results. Certified hair restoration specialists at Russald Medical Center.',
+  alternates: { canonical: '/hair-restoration' },
   openGraph: {
-    title:       'Weight Loss Surgery in Tijuana | Russald Medical Center',
-    description: 'Gastric sleeve, gastric bypass, mini bypass, Lap-Band & revision surgery — 65–75% less than US prices, 20 minutes from San Diego.',
-    url:         '/weight-loss',
+    title:       'Hair Restoration in Tijuana | Russald Medical Center',
+    description: 'FUE & DHI hair transplant surgery in Tijuana — 60–70% less than US prices, 20 minutes from San Diego.',
+    url:         '/hair-restoration',
   },
 }
 
-const jsonLd      = procedureSchema('Weight Loss Surgery', wlsData.intro.paragraphs[0], '/weight-loss')
+const jsonLd      = procedureSchema('Hair Restoration Surgery', hairData.intro.paragraphs[0], '/hair-restoration')
 const breadcrumbs = breadcrumbSchema([
-  { name: 'Home',                url: SITE.url },
-  { name: 'Weight Loss Surgery', url: `${SITE.url}/weight-loss` },
+  { name: 'Home',             url: SITE.url },
+  { name: 'Hair Restoration', url: `${SITE.url}/hair-restoration` },
 ])
 const webPage     = medicalWebPageSchema({
-  name:        'Weight Loss Surgery in Tijuana, Mexico',
-  description: wlsData.intro.paragraphs[0],
-  path:        '/weight-loss',
-  specialty:   'Bariatric Surgery',
+  name:        'Hair Restoration in Tijuana, Mexico',
+  description: hairData.intro.paragraphs[0],
+  path:        '/hair-restoration',
+  specialty:   'Hair Restoration',
 })
 
-export default function WeightLossSurgeryPage() {
+export default function HairRestorationPage() {
   return (
     <>
       <JsonLd data={jsonLd as Record<string, unknown>} />
       <JsonLd data={breadcrumbs as Record<string, unknown>} />
       <JsonLd data={webPage as Record<string, unknown>} />
-      <SpecHero       data={wlsData.hero}   />
-      <SpecFactsStrip facts={wlsData.facts} />
-      <SpecIntro      data={wlsData.intro}  />
-      <SpecWhy        data={wlsData.why}    />
-      <SpecProc       data={wlsData.proc}   />
+      <SpecHero       data={hairData.hero}   />
+      <SpecFactsStrip facts={hairData.facts} />
+      <SpecIntro      data={hairData.intro}  />
+      <SpecWhy        data={hairData.why}    />
+      <SpecProc       data={hairData.proc}   />
       <EvalFormSection />
       <SpecFloatCta />
     </>

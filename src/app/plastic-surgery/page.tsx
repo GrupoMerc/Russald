@@ -2,6 +2,8 @@ import type { Metadata }  from 'next'
 import dynamic            from 'next/dynamic'
 import { plasticData }    from '@/lib/pages/plasticSurgery'
 import { procedureSchema, breadcrumbSchema, medicalWebPageSchema } from '@/lib/schema'
+import { JsonLd }         from '@/components/JsonLd'
+import { SITE }           from '@/config/site'
 
 // Static — above the fold (LCP)
 import SpecHero        from '@/components/sections/spec/SpecHero'
@@ -28,8 +30,8 @@ export const metadata: Metadata = {
 
 const jsonLd      = procedureSchema('Plastic Surgery', plasticData.intro.paragraphs[0], '/plastic-surgery')
 const breadcrumbs = breadcrumbSchema([
-  { name: 'Home',            url: 'https://russaldmedical.com' },
-  { name: 'Plastic Surgery', url: 'https://russaldmedical.com/plastic-surgery' },
+  { name: 'Home',            url: SITE.url },
+  { name: 'Plastic Surgery', url: `${SITE.url}/plastic-surgery` },
 ])
 const webPage     = medicalWebPageSchema({
   name:        'Plastic Surgery in Tijuana, Mexico',
@@ -41,9 +43,9 @@ const webPage     = medicalWebPageSchema({
 export default function PlasticSurgeryPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPage) }} />
+      <JsonLd data={jsonLd as Record<string, unknown>} />
+      <JsonLd data={breadcrumbs as Record<string, unknown>} />
+      <JsonLd data={webPage as Record<string, unknown>} />
       <SpecHero       data={plasticData.hero}   />
       <SpecFactsStrip facts={plasticData.facts} />
       <SpecIntro      data={plasticData.intro}  />

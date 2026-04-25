@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
+import { SITE } from '@/config/site'
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://russaldmedical.com'
+const BASE = SITE.url
 
 // Fechas estáticas por sección — actualizar al publicar cambios significativos
 const DATES = {
@@ -33,13 +34,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/weight-loss/bariatric-revision`,  lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.7 },
 
     // ── Plastic Surgery — procedimientos ─────────────────────────────────────
-    { url: `${BASE}/plastic-surgery/mommy-makeover`,     lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/plastic-surgery/tummy-tuck`,         lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/plastic-surgery/liposuction`,        lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/plastic-surgery/bbl`,                lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/plastic-surgery/breast-augmentation`,lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/plastic-surgery/rhinoplasty`,        lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/plastic-surgery/facelift`,           lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/plastic-surgery/mommy-makeover`,      lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/plastic-surgery/tummy-tuck`,          lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/plastic-surgery/liposuction`,         lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/plastic-surgery/bbl`,                 lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/plastic-surgery/breast-augmentation`, lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/plastic-surgery/rhinoplasty`,         lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/plastic-surgery/facelift`,            lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.7 },
 
     // ── Hair & Regenerative ───────────────────────────────────────────────────
     { url: `${BASE}/hair-restoration/fue`, lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.8 },
@@ -54,9 +55,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/mens-health/sclerotherapy`,        lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.6 },
 
     // ── Bio-Optimization ─────────────────────────────────────────────────────
-    { url: `${BASE}/bio-optimization/bhrt`,          lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE}/bio-optimization/hgh`,           lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE}/bio-optimization/myers-cocktail`,lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/bio-optimization/bhrt`,           lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/bio-optimization/hgh`,            lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/bio-optimization/myers-cocktail`, lastModified: DATES.procedures, changeFrequency: 'monthly', priority: 0.6 },
 
     // ── About / Soporte ───────────────────────────────────────────────────────
     { url: `${BASE}/medical-team`,      lastModified: DATES.support, changeFrequency: 'monthly', priority: 0.7 },

@@ -1,6 +1,7 @@
 // Figma node: 2300:810 — Footer Desktop · 2322:909 Tablet · 2334:1658 Mobile
 
 import Link from 'next/link'
+import { SITE } from '@/config/site'
 
 type ColLink = { label: string; href: string; highlight?: true }
 type FooterCol = { heading: string; links: readonly ColLink[] }
@@ -75,13 +76,7 @@ const COLS: readonly FooterCol[] = [
   },
 ] as const
 
-const SAME_AS = [
-  {
-    label: 'Google Maps',
-    href: 'https://maps.google.com/?q=Russald+Medical+Center+Tijuana+Mexico',
-  },
-  { label: 'russaldclinic.com', href: 'https://russaldclinic.com' },
-] as const
+const SAME_AS = SITE.sameAsLinks
 
 const MEDICAL_DISCLAIMER =
   'Medical Disclaimer: Information provided on this website, including assessments, messages, and tools, is for educational purposes only and does not constitute medical advice, diagnosis, or treatment. All medical procedures are performed by licensed physicians in Mexico within Russald Medical facilities. MedicalMex provides non-clinical coordination services only and does not practice medicine. Final medical decisions are made during in-person consultation.'
@@ -114,12 +109,15 @@ export default function Footer() {
             RUSSALD MEDICAL CENTER
           </p>
           <p className="font-['Nunito_Sans',sans-serif] font-normal text-[0.6875rem] text-white/35 whitespace-nowrap">
-            Tijuana, Mexico · Russald Medical S.A. de C.V.
+            {SITE.address.locality}, Mexico · {SITE.legalName}
           </p>
           <p className="font-['Nunito_Sans',sans-serif] font-normal text-[0.75rem] text-white/40">
-            <a href="tel:+526649069268" className="hover:text-white/70 transition-colors">MEX: +52 (664) 906-92-68</a>
-            {'  |  '}
-            <a href="tel:+18582644121" className="hover:text-white/70 transition-colors">US: +1 (858) 264-4121</a>
+            {SITE.phoneLinks.map(({ href, label }, i) => (
+              <span key={href}>
+                {i > 0 && '  |  '}
+                <a href={href} className="hover:text-white/70 transition-colors">{label}</a>
+              </span>
+            ))}
           </p>
           <div className="flex gap-4 mt-1" aria-label="Find us online">
             {SAME_AS.map(({ label, href }) => (
@@ -192,8 +190,7 @@ export default function Footer() {
             {MEDICAL_DISCLAIMER}
           </p>
           <p className="font-['Nunito_Sans',sans-serif] font-normal text-[0.71875rem] text-white/40">
-            © {year} Russald Medical Center - Russald Medical S.A. de C.V. · Tijuana, Mexico. All rights
-            reserved.
+            © {year} {SITE.name} - {SITE.legalName} · {SITE.address.locality}, Mexico. All rights reserved.
           </p>
         </div>
       </div>

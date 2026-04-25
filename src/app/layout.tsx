@@ -4,7 +4,9 @@ import { Rethink_Sans, Nunito_Sans } from 'next/font/google'
 import '@/styles/globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { JsonLd } from '@/components/JsonLd'
 import { organizationSchema } from '@/lib/schema'
+import { SITE } from '@/config/site'
 
 const rethinkSans = Rethink_Sans({
   subsets: ['latin'],
@@ -20,32 +22,47 @@ const nunitoSans = Nunito_Sans({
   display: 'swap',
 })
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://russaldmedical.com'
-const TITLE    = 'Russald Medical Center — World-Class Surgery in Tijuana'
-const DESC     = 'Board-certified surgeons in Tijuana, Mexico. 60–75% less than US prices. Minutes from San Diego. Weight loss, plastic surgery, hair restoration & more.'
-
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE.url),
   title: {
-    default: TITLE,
-    template: '%s | Russald Medical Center',
+    default:  SITE.title,
+    template: `%s | ${SITE.name}`,
   },
-  description: DESC,
-  metadataBase: new URL(SITE_URL),
-  alternates: { canonical: SITE_URL },
+  description: SITE.description,
+  alternates: { canonical: '/' },
   openGraph: {
     type:        'website',
     locale:      'en_US',
-    url:         SITE_URL,
-    siteName:    'Russald Medical Center',
-    title:       TITLE,
-    description: DESC,
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Russald Medical Center — World-Class Surgery in Tijuana, Mexico' }],
+    url:         SITE.url,
+    siteName:    SITE.name,
+    title:       SITE.title,
+    description: SITE.description,
+    images: [{
+      url:    SITE.og.image,
+      width:  SITE.og.width,
+      height: SITE.og.height,
+      alt:    SITE.og.imageAlt,
+    }],
   },
   twitter: {
     card:        'summary_large_image',
-    title:       TITLE,
-    description: DESC,
-    images:      ['/og-image.jpg'],
+    title:       SITE.title,
+    description: SITE.description,
+    images:      [SITE.og.image],
+  },
+  robots: {
+    index:     true,
+    follow:    true,
+    googleBot: {
+      index:               true,
+      follow:              true,
+      'max-image-preview': 'large',
+      'max-snippet':       -1,
+      'max-video-preview': -1,
+    },
+  },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
   },
 }
 
@@ -53,14 +70,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${rethinkSans.variable} ${nunitoSans.variable}`}>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }}
-        />
-        {/* Geo meta tags — ayudan a crawlers locales y a Google Maps a ubicar el centro */}
-        {/* TODO: Actualizar con coordenadas exactas del Google Business Profile */}
+        <JsonLd data={organizationSchema() as Record<string, unknown>} />
+        {/* Geo meta tags — ayudan a crawlers locales y a Google Maps */}
+        {/* TODO: actualizar con coordenadas exactas del Google Business Profile */}
         <meta name="geo.region"    content="MX-BCN" />
         <meta name="geo.placename" content="Tijuana, Baja California, Mexico" />
+        <meta name="geo.position"  content={`${SITE.geo.latitude};${SITE.geo.longitude}`} />
+        <meta name="ICBM"          content={`${SITE.geo.latitude}, ${SITE.geo.longitude}`} />
       </head>
       <body suppressHydrationWarning>
         <a
