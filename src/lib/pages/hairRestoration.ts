@@ -105,4 +105,35 @@ export const hairData = {
       { icon: '🩸', title: 'PRP Hair Treatment',        category: 'Regenerative Hair Therapy',    href: '/hair-restoration/prp' },
     ],
   },
+
+  faq: {
+    eyebrow: 'Frequently Asked Questions',
+    heading: 'Hair Restoration in Tijuana — Common Questions',
+    items: [
+      {
+        q: 'How much does a hair transplant cost in Tijuana at Russald Medical Center?',
+        a: 'Hair transplant procedures at Russald Medical Center cost 60–75% less than comparable procedures in the United States. Pricing is based on the number of grafts required, which is determined during your evaluation. Your coordinator provides a detailed quote with no hidden fees.',
+      },
+      {
+        q: 'What is the difference between FUE and DHI hair transplants?',
+        a: 'FUE (Follicular Unit Extraction) extracts individual follicular units from the donor area and implants them using a pre-made channel technique. DHI (Direct Hair Implantation) uses a specialized implanter pen to place grafts directly without pre-made channels, which can allow for denser packing and more precise angle control. Your surgeon will recommend the appropriate technique based on your hair loss pattern, donor density, and goals.',
+      },
+      {
+        q: 'Am I a candidate for a hair transplant?',
+        a: 'Good candidates have stable hair loss (not actively progressing), adequate donor hair density at the back and sides of the scalp, and realistic expectations about coverage. A pre-operative evaluation including photographs and scalp assessment determines candidacy. Hair transplants do not stop future loss — your surgeon will discuss medical management alongside the procedure.',
+      },
+      {
+        q: 'How long does recovery take after a hair transplant?',
+        a: 'Most patients can return to desk work within 3–5 days. The transplanted area will shed within 2–4 weeks — this is normal and expected. New growth typically becomes visible at 3–4 months, with final results at 12–18 months. Your discharge instructions detail exactly what to expect at each stage.',
+      },
+      {
+        q: 'Will the transplanted hair look natural?',
+        a: 'Natural results depend on graft placement angle, direction, and density — all of which are controlled by the surgical team during implantation. Russald Medical Center\'s hair restoration surgeons design the hairline and distribution based on your facial structure and existing hair pattern. The transplanted follicles are your own hair and grow permanently.',
+      },
+      {
+        q: 'Does PRP work as a standalone treatment for hair loss?',
+        a: 'PRP (Platelet-Rich Plasma) therapy can slow hair loss and stimulate dormant follicles in early-stage hair loss, but it does not replace lost follicles. It is most effective as a maintenance or adjunct treatment alongside a hair transplant or medical therapy. Multiple sessions spaced 4–6 weeks apart are typically required for best results.',
+      },
+    ],
+  },
 } satisfies SpecPageData

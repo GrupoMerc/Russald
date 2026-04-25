@@ -1,7 +1,7 @@
 import type { Metadata }  from 'next'
 import dynamic            from 'next/dynamic'
 import { wlsData }        from '@/lib/pages/weightLoss'
-import { procedureSchema, breadcrumbSchema, medicalWebPageSchema } from '@/lib/schema'
+import { procedureSchema, breadcrumbSchema, medicalWebPageSchema, faqSchema } from '@/lib/schema'
 import { JsonLd }         from '@/components/JsonLd'
 import { SITE }           from '@/config/site'
 
@@ -13,6 +13,7 @@ import SpecFactsStrip  from '@/components/sections/spec/SpecFactsStrip'
 const SpecIntro       = dynamic(() => import('@/components/sections/spec/SpecIntro'))
 const SpecWhy         = dynamic(() => import('@/components/sections/spec/SpecWhy'))
 const SpecProc        = dynamic(() => import('@/components/sections/spec/SpecProc'))
+const SpecFaq         = dynamic(() => import('@/components/sections/spec/SpecFaq'))
 const EvalFormSection = dynamic(() => import('@/components/sections/EvalFormSection'))
 const SpecFloatCta    = dynamic(() => import('@/components/sections/spec/SpecFloatCta'))
 
@@ -39,6 +40,7 @@ const webPage     = medicalWebPageSchema({
   path:        '/weight-loss',
   specialty:   'Bariatric Surgery',
 })
+const faqLd       = faqSchema(wlsData.faq.items)
 
 export default function WeightLossSurgeryPage() {
   return (
@@ -46,11 +48,13 @@ export default function WeightLossSurgeryPage() {
       <JsonLd data={jsonLd as Record<string, unknown>} />
       <JsonLd data={breadcrumbs as Record<string, unknown>} />
       <JsonLd data={webPage as Record<string, unknown>} />
+      <JsonLd data={faqLd as Record<string, unknown>} />
       <SpecHero       data={wlsData.hero}   />
       <SpecFactsStrip facts={wlsData.facts} />
       <SpecIntro      data={wlsData.intro}  />
       <SpecWhy        data={wlsData.why}    />
       <SpecProc       data={wlsData.proc}   />
+      <SpecFaq        data={wlsData.faq}    />
       <EvalFormSection />
       <SpecFloatCta />
     </>
