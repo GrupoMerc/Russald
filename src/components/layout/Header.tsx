@@ -2,7 +2,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import Nav from './Nav'
 
@@ -137,12 +136,13 @@ export default function Header() {
           href="/"
           aria-label="Russald Medical Center — home"
         >
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src="/logo.png"
             alt="Russald Medical Center"
             width={173}
             height={44}
-            priority
+            fetchPriority="high"
           />
         </Link>
 

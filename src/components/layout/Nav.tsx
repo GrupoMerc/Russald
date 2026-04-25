@@ -2,7 +2,6 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -77,7 +76,8 @@ export default function Nav() {
           aria-label="Russald Medical Center — home"
           className="focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]"
         >
-          <Image src="/logo.png" alt="Russald Medical Center" width={130} height={33} priority />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Russald Medical Center" width={130} height={33} fetchPriority="high" />
         </Link>
 
         <button
@@ -125,7 +125,8 @@ export default function Nav() {
               onClick={close}
               aria-label="Russald Medical Center — home"
             >
-              <Image src="/logo.png" alt="Russald Medical Center" width={130} height={33} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Russald Medical Center" width={130} height={33} />
             </Link>
             <button
               type="button"
