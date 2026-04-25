@@ -545,7 +545,7 @@ LEADS_ENABLED=true   → main únicamente, cuando el equipo confirme el URL
 |---|---|---|
 | `/mens-health` page | En QA — revisar visualmente | Contenido del HTML vFinal |
 | `/vascular-care` page | En QA — revisar visualmente | Contenido del HTML vFinal |
-| `/bio-optimization` page | Pendiente | |
+| `/bio-optimization` page | En QA — revisar visualmente | Contenido del HTML vFinal |
 | `/about` full | Pendiente | Placeholder Coming Soon listo |
 | `og-image.jpg` 1200×630 | Pendiente | Necesita diseño — actualmente usa placeholder |
 | Trustpilot / RealSelf en `sameAs` | Pendiente | Agregar a `site.ts` cuando haya perfil verificado |
