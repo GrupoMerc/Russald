@@ -543,7 +543,7 @@ LEADS_ENABLED=true   → main únicamente, cuando el equipo confirme el URL
 
 | Tarea | Estado | Notas |
 |---|---|---|
-| `/mens-health` page | Pendiente | Siguiente prioridad — aparece en nav y HomeSpecialties |
+| `/mens-health` page | En QA — revisar visualmente | Contenido del HTML vFinal |
 | `/vascular-care` page | Pendiente | |
 | `/bio-optimization` page | Pendiente | |
 | `/about` full | Pendiente | Placeholder Coming Soon listo |
