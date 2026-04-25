@@ -46,8 +46,8 @@ const COLS: readonly FooterCol[] = [
       { label: 'BHRT',                     href: '/bio-optimization/bhrt' },
       { label: 'HGH Therapy',              href: '/bio-optimization/hgh' },
       { label: 'Myers Cocktail IV',        href: '/bio-optimization/myers-cocktail' },
-      { label: 'EVLA Vein Treatment',      href: '/mens-health/evla' },
-      { label: 'Sclerotherapy',            href: '/mens-health/sclerotherapy' },
+      { label: 'EVLA Vein Treatment',      href: '/vascular-care/evla' },
+      { label: 'Sclerotherapy',            href: '/vascular-care/sclerotherapy' },
     ],
   },
   {

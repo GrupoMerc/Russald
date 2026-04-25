@@ -9,8 +9,8 @@ const DATES = {
   specialties:   '2026-04-25',
   procedures:    '2026-04-25',
   vascularCare:  '2026-04-25',
-  support:       '2026-01-01',
-  legal:         '2026-01-01',
+  support:       '2026-04-25',
+  legal:         '2026-04-25',
 } as const
 
 export default function sitemap(): MetadataRoute.Sitemap {
