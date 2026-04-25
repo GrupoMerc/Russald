@@ -138,7 +138,7 @@ export default function Header() {
           aria-label="Russald Medical Center — home"
         >
           <Image
-            src="/logo.svg"
+            src="/logo.png"
             alt="Russald Medical Center"
             width={173}
             height={44}

@@ -77,7 +77,7 @@ export default function Nav() {
           aria-label="Russald Medical Center — home"
           className="focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]"
         >
-          <Image src="/logo.svg" alt="Russald Medical Center" width={130} height={33} priority />
+          <Image src="/logo.png" alt="Russald Medical Center" width={130} height={33} priority />
         </Link>
 
         <button
@@ -125,7 +125,7 @@ export default function Nav() {
               onClick={close}
               aria-label="Russald Medical Center — home"
             >
-              <Image src="/logo.svg" alt="Russald Medical Center" width={130} height={33} />
+              <Image src="/logo.png" alt="Russald Medical Center" width={130} height={33} />
             </Link>
             <button
               type="button"
