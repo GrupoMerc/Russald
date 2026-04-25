@@ -260,39 +260,95 @@ const variants = reduced ? {} : fadeUp
 
 ---
 
-## 9. SEO y Metadata
+## 9. SEO, GEO y AI Schema — estándar obligatorio
 
-### Patrón por página
+### 9a. Metadata por página
 ```tsx
-// app/weight-loss/page.tsx
 export const metadata: Metadata = {
-  title: 'Weight Loss Surgery in Tijuana, Mexico',      // ← aparece como "... | Russald Medical Center"
-  description: 'Concise, benefit-forward. Max 155 chars.',
-  alternates: { canonical: '/weight-loss' },             // ← siempre canonical
+  title: 'Weight Loss Surgery in Tijuana, Mexico',  // → "... | Russald Medical Center"
+  description: 'Benefit-forward, max 155 chars. Incluir procedimiento + ciudad + diferenciador.',
+  alternates: { canonical: '/weight-loss' },         // siempre relativo — metadataBase lo resuelve
   openGraph: {
     title:       'Weight Loss Surgery in Tijuana | Russald Medical Center',
     description: '...',
     url:         '/weight-loss',
-    images: [{ url: '/og/weight-loss.jpg', width: 1200, height: 630 }],
   },
 }
 ```
 
-### JSON-LD por página de especialidad
+### 9b. JSON-LD — 3 scripts obligatorios en toda página de especialidad
+
+Cada `page.tsx` de especialidad debe incluir **los 3 scripts**:
+
 ```tsx
-// lib/schema.ts — agregar función por tipo de página
-export function medicalProcedureSchema(data: SpecPageData) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'MedicalProcedure',
-    name: data.hero.heading,
-    description: data.intro.paragraphs[0],
-    // ...
-  }
-}
+import { procedureSchema, breadcrumbSchema, medicalWebPageSchema } from '@/lib/schema'
+
+// 1. MedicalProcedure
+const jsonLd = procedureSchema('Weight Loss Surgery', pageData.intro.paragraphs[0], '/weight-loss')
+
+// 2. BreadcrumbList — mejora navegación en Google y citas en AI
+const breadcrumbs = breadcrumbSchema([
+  { name: 'Home',                url: 'https://russaldmedical.com' },
+  { name: 'Weight Loss Surgery', url: 'https://russaldmedical.com/weight-loss' },
+])
+
+// 3. MedicalWebPage — señal de revisión médica para E-E-A-T y AI
+const webPage = medicalWebPageSchema({
+  name:        'Weight Loss Surgery in Tijuana, Mexico',
+  description: pageData.intro.paragraphs[0],
+  path:        '/weight-loss',
+  specialty:   'Bariatric Surgery',  // e.g. 'Plastic Surgery', 'Hair Restoration'
+})
+
+// En el JSX — nunca en layout.tsx, siempre en page.tsx
+<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
+<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPage) }} />
 ```
 
-Incluir en `page.tsx` via `<script type="application/ld+json">` — no en layout global.
+### 9c. Funciones disponibles en `lib/schema.ts`
+
+| Función | Cuándo usar |
+|---|---|
+| `organizationSchema()` | Solo en `layout.tsx` — global, una vez |
+| `procedureSchema(name, desc, path)` | En toda página de especialidad (weight-loss, plastic-surgery…) |
+| `breadcrumbSchema(crumbs[])` | En toda página de especialidad y sub-procedimiento |
+| `medicalWebPageSchema(params)` | En toda página de especialidad — E-E-A-T + AI citation |
+| `contactPageSchema()` | Solo en `/free-evaluation/page.tsx` |
+
+### 9d. GEO — pendientes antes de producción real
+
+Los siguientes campos están comentados en `organizationSchema()` — completar con datos del Google Business Profile:
+
+```ts
+// TODO en lib/schema.ts:
+geo: { '@type': 'GeoCoordinates', latitude: '32.XXXX', longitude: '-117.XXXX' }
+address.streetAddress: 'Ave. [dirección exacta]'
+address.postalCode: '220XX'
+openingHoursSpecification: [{ dayOfWeek: [...], opens: '09:00', closes: '18:00' }]
+
+// TODO en app/layout.tsx:
+<meta name="geo.position" content="32.XXXX;-117.XXXX" />
+<meta name="ICBM" content="32.XXXX, -117.XXXX" />
+```
+
+### 9e. AI / LLM Optimization (Generative Engine Optimization)
+
+Para que ChatGPT, Perplexity y Google AI Overviews citen a Russald:
+
+- **FAQPage schema** — cuando se construya `/faq`, cada Q&A debe estar en schema `FAQPage > Question > Answer`
+- **Primer párrafo de intro** — siempre debe contener: nombre del procedimiento + ciudad + diferenciador de precio + acceso desde EE.UU. (los LLMs citan la primera oración)
+- **Datos citables** — porcentajes concretos (`65–75% less`), tiempos (`2–4 hrs`), distancia (`20 min from San Diego`) — nunca frases vagas
+- **sameAs** — agregar perfiles verificados cuando estén disponibles: Instagram oficial, Trustpilot, RealSelf
+- **Página `/about`** — pendiente de crear; es el anchor de entidad de conocimiento para el knowledge graph
+
+### 9f. Sitemap — reglas de mantenimiento
+
+- **Fechas estáticas**: usar constante `DATES.xxx` en `sitemap.ts`, nunca `new Date()`
+- **Actualizar `DATES.procedures`** cada vez que se publique o actualice una página de procedimiento
+- **Nueva página de especialidad** → agregar entrada en sitemap con `priority: 0.9` y `changeFrequency: 'weekly'`
+- **Nuevo sub-procedimiento** → agregar con `priority: 0.8` y `changeFrequency: 'monthly'`
+- **Coming soon** (catch-all): no agregar al sitemap hasta que tenga contenido real
 
 ---
 

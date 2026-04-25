@@ -2,7 +2,7 @@
 
 export default function HimplantCallout() {
   return (
-    <section className="flex flex-col items-center bg-[var(--color-white)] px-6 pt-8 pb-[3.25rem] sm:px-0">
+    <section aria-labelledby="himplant-heading" className="flex flex-col items-center bg-[var(--color-white)] px-6 pt-8 pb-[3.25rem] sm:px-0">
       {/* Card — full-width on mobile, max-w constrained on sm/lg */}
       <div
         className="w-full overflow-hidden rounded-[14px] sm:max-w-[786px] lg:max-w-[980px]"
@@ -43,7 +43,7 @@ export default function HimplantCallout() {
               </span>
             </div>
 
-            <h2 className="font-['Rethink_Sans',sans-serif] text-[1.1875rem] font-bold leading-[1.25] text-[var(--color-white)] sm:text-[1.3125rem] sm:leading-[1.2]">
+            <h2 id="himplant-heading" className="font-['Rethink_Sans',sans-serif] text-[1.1875rem] font-bold leading-[1.25] text-[var(--color-white)] sm:text-[1.3125rem] sm:leading-[1.2]">
               Male Enhancement Implant: Permanent, FDA-Cleared Girth Enhancement
             </h2>
 
