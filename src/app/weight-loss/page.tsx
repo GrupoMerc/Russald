@@ -1,18 +1,18 @@
 import type { Metadata }  from 'next'
 import dynamic            from 'next/dynamic'
 import { wlsData }        from '@/lib/pages/weightLoss'
-import { procedureSchema } from '@/lib/schema'
+import { procedureSchema, breadcrumbSchema, medicalWebPageSchema } from '@/lib/schema'
 
 // Static — above the fold (LCP)
 import SpecHero        from '@/components/sections/spec/SpecHero'
 import SpecFactsStrip  from '@/components/sections/spec/SpecFactsStrip'
 
 // Dynamic — below the fold
-const SpecIntro      = dynamic(() => import('@/components/sections/spec/SpecIntro'))
-const SpecWhy        = dynamic(() => import('@/components/sections/spec/SpecWhy'))
-const SpecProc       = dynamic(() => import('@/components/sections/spec/SpecProc'))
+const SpecIntro       = dynamic(() => import('@/components/sections/spec/SpecIntro'))
+const SpecWhy         = dynamic(() => import('@/components/sections/spec/SpecWhy'))
+const SpecProc        = dynamic(() => import('@/components/sections/spec/SpecProc'))
 const EvalFormSection = dynamic(() => import('@/components/sections/EvalFormSection'))
-const SpecFloatCta   = dynamic(() => import('@/components/sections/spec/SpecFloatCta'))
+const SpecFloatCta    = dynamic(() => import('@/components/sections/spec/SpecFloatCta'))
 
 export const metadata: Metadata = {
   title: 'Weight Loss Surgery in Tijuana, Mexico',
@@ -26,20 +26,25 @@ export const metadata: Metadata = {
   },
 }
 
-const jsonLd = procedureSchema(
-  'Weight Loss Surgery',
-  wlsData.intro.paragraphs[0],
-  'https://russaldmedical.com/weight-loss',
-)
+const jsonLd       = procedureSchema('Weight Loss Surgery', wlsData.intro.paragraphs[0], '/weight-loss')
+const breadcrumbs  = breadcrumbSchema([
+  { name: 'Home',                url: 'https://russaldmedical.com' },
+  { name: 'Weight Loss Surgery', url: 'https://russaldmedical.com/weight-loss' },
+])
+const webPage      = medicalWebPageSchema({
+  name:        'Weight Loss Surgery in Tijuana, Mexico',
+  description: wlsData.intro.paragraphs[0],
+  path:        '/weight-loss',
+  specialty:   'Bariatric Surgery',
+})
 
 export default function WeightLossSurgeryPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <SpecHero       data={wlsData.hero}  />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPage) }} />
+      <SpecHero       data={wlsData.hero}   />
       <SpecFactsStrip facts={wlsData.facts} />
       <SpecIntro      data={wlsData.intro}  />
       <SpecWhy        data={wlsData.why}    />

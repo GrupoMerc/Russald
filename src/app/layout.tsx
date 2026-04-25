@@ -57,6 +57,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }}
         />
+        {/* Geo meta tags — ayudan a crawlers locales y a Google Maps a ubicar el centro */}
+        {/* TODO: Actualizar con coordenadas exactas del Google Business Profile */}
+        <meta name="geo.region"    content="MX-BCN" />
+        <meta name="geo.placename" content="Tijuana, Baja California, Mexico" />
       </head>
       <body suppressHydrationWarning>
         <a
