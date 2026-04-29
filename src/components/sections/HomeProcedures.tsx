@@ -87,7 +87,7 @@ function ProcedureCard({ proc, emoji }: { proc: Procedure; emoji: string }) {
         href={proc.href}
         className={
           'overflow-hidden rounded-[8px] shadow-[var(--shadow-card-rest)] block ' +
-          'transition-shadow hover:shadow-[0px_4px_16px_0px_rgba(181,134,42,0.25)] ' +
+          'transition-shadow hover:shadow-[var(--shadow-gold-hover)] ' +
           'focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]'
         }
         style={{
