@@ -12,11 +12,35 @@
   --color-white:       #FFFFFF;
   --color-ice:         #F8FAFC;
 
+  /* Form / UI */
+  --color-form-blue:       #097BB4;
+  --color-form-blue-tint:  #EAF4FB;
+  --color-form-blue-deep:  #054E78;
+  --color-form-blue-hover: #0869A0;
+
+  /* Feedback states */
+  --color-success-bg:  #E1F5EE;
+  --color-success-fg:  #0F6E56;
+  --color-warning-bg:  #FBF4E6;
+
+  /* Brand channels */
+  --color-whatsapp:       #25D366;
+  --color-whatsapp-hover: #21BA5A;
+
+  /* Inputs */
+  --color-placeholder: #B0B0B8;
+
   --font-display: 'Rethink Sans', sans-serif;
   --font-body:    'Nunito Sans', sans-serif;
 
   --radius-btn:  50px;
   --radius-card: 12px;
+}
+
+:root {
+  /* Alpha variants — outside @theme because Tailwind v4 @theme does not support rgba() */
+  --color-form-blue-a08: rgba(9, 123, 180, 0.08);
+  --color-form-blue-a15: rgba(9, 123, 180, 0.15);
 }
 
 :focus-visible {
