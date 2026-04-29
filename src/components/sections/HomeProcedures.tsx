@@ -76,7 +76,7 @@ const specialties: SpecialtyGroup[] = [
 ]
 
 const cardBase =
-  'flex items-center gap-3 rounded-[8px] border border-[var(--color-border)] bg-[var(--color-white)] p-4 shadow-[0px_1px_3px_0px_rgba(15,28,63,0.08)] ' +
+  'flex items-center gap-3 rounded-[8px] border border-[var(--color-border)] bg-[var(--color-white)] p-4 shadow-[var(--shadow-card-rest)] ' +
   'transition-shadow hover:shadow-[0px_4px_12px_0px_rgba(15,28,63,0.12)] hover:border-[var(--color-blue)]/30 ' +
   'focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]'
 
@@ -86,7 +86,7 @@ function ProcedureCard({ proc, emoji }: { proc: Procedure; emoji: string }) {
       <Link
         href={proc.href}
         className={
-          'overflow-hidden rounded-[8px] shadow-[0px_1px_3px_0px_rgba(15,28,63,0.08)] block ' +
+          'overflow-hidden rounded-[8px] shadow-[var(--shadow-card-rest)] block ' +
           'transition-shadow hover:shadow-[0px_4px_16px_0px_rgba(181,134,42,0.25)] ' +
           'focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]'
         }
