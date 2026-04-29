@@ -77,7 +77,7 @@ const specialties: SpecialtyGroup[] = [
 
 const cardBase =
   'flex items-center gap-3 rounded-[8px] border border-[var(--color-border)] bg-[var(--color-white)] p-4 shadow-[var(--shadow-card-rest)] ' +
-  'transition-shadow hover:shadow-[0px_4px_12px_0px_rgba(15,28,63,0.12)] hover:border-[var(--color-blue)]/30 ' +
+  'transition-shadow hover:shadow-[var(--shadow-card-hover)] hover:border-[var(--color-blue)]/30 ' +
   'focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)]'
 
 function ProcedureCard({ proc, emoji }: { proc: Procedure; emoji: string }) {
