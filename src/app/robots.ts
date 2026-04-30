@@ -1,9 +1,12 @@
 import type { MetadataRoute } from 'next'
+import { headers } from 'next/headers'
 import { SITE } from '@/config/site'
 
-const IS_PROD = SITE.url === 'https://russaldmedical.com'
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const headersList = await headers()
+  const host = headersList.get('host') ?? ''
+  const IS_PROD = host === 'russaldmedical.com' || host === 'www.russaldmedical.com'
 
-export default function robots(): MetadataRoute.Robots {
   if (!IS_PROD) {
     return { rules: { userAgent: '*', disallow: '/' } }
   }

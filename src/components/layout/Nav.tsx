@@ -183,7 +183,7 @@ export default function Nav() {
                   'absolute top-full left-0 z-[900]',
                   'min-w-[220px] bg-[var(--color-white)]',
                   'border border-[var(--color-border)] rounded-b-[8px]',
-                  'shadow-[0_8px_24px_rgba(15,28,63,0.10)]',
+                  'shadow-[var(--shadow-dropdown)]',
                   'pointer-events-none opacity-0 translate-y-[-4px]',
                   'group-hover:pointer-events-auto group-hover:opacity-100 group-hover:translate-y-0',
                   'group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0',
