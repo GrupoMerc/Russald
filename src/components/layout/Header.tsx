@@ -32,7 +32,7 @@ export default function Header() {
       className={
         'sticky top-0 z-50 w-full flex flex-col bg-[var(--color-white)] ' +
         'transition-shadow duration-200' +
-        (scrolled ? ' shadow-[0_2px_16px_rgba(15,28,63,0.10)]' : '')
+        (scrolled ? ' shadow-[var(--shadow-elevated)]' : '')
       }
     >
       {/*

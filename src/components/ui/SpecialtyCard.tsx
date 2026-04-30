@@ -25,7 +25,7 @@ export default function SpecialtyCard({
       className={
         'group bg-[var(--color-white)] border border-[var(--color-border)] rounded-[var(--radius-card)] ' +
         'overflow-hidden flex flex-col w-full transition-shadow duration-200 ' +
-        'hover:shadow-[0_8px_32px_rgba(15,28,63,0.12)] ' +
+        'hover:shadow-[var(--shadow-card-hover-lg)] ' +
         className
       }
     >

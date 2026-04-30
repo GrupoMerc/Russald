@@ -37,7 +37,7 @@ export default function SpecWhy({ data }: Props) {
           {data.items.map((item) => (
             <div
               key={item.title}
-              className="bg-[var(--color-white)] border border-[var(--color-border)] rounded-[10px] shadow-[0px_1px_3px_0px_rgba(15,28,63,0.08)] px-5 py-[22px] flex flex-col gap-2"
+              className="bg-[var(--color-white)] border border-[var(--color-border)] rounded-[10px] shadow-[var(--shadow-card-rest)] px-5 py-[22px] flex flex-col gap-2"
             >
               <span className="text-[1.375rem]" aria-hidden="true">{item.icon}</span>
               <p className="font-['Rethink_Sans',sans-serif] font-bold text-[var(--color-navy)] text-[0.875rem] leading-[1.3]">{item.title}</p>

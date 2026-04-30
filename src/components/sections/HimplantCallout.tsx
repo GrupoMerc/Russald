@@ -57,8 +57,7 @@ export default function HimplantCallout() {
           {/* Gold CTA — full-width mobile, shrink-0 auto-width on sm+ */}
           <a
             href="#eval-form"
-            className="flex min-h-[48px] w-full shrink-0 items-center justify-center rounded-[6px] bg-[var(--color-blue)] px-[1.375rem] py-[0.875rem] font-['Nunito_Sans',sans-serif] text-[0.8125rem] font-bold tracking-[0.39px] text-[var(--color-white)] whitespace-nowrap focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)] sm:w-auto"
-            style={{ boxShadow: '0px 4px 14px 0px rgba(181,134,42,0.28)' }}
+            className="flex min-h-[48px] w-full shrink-0 items-center justify-center rounded-[6px] bg-[var(--color-blue)] px-[1.375rem] py-[0.875rem] font-['Nunito_Sans',sans-serif] text-[0.8125rem] font-bold tracking-[0.39px] text-[var(--color-white)] whitespace-nowrap shadow-[var(--shadow-gold-btn)] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)] sm:w-auto"
           >
             Learn About HIMPLANT →
           </a>
