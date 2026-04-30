@@ -73,3 +73,12 @@ export interface SpecPageData {
   readonly proc: SpecProcData
   readonly faq: SpecFaqData
 }
+
+// Sub-procedure pages — same layout as SpecPageData but without the procedures grid
+export interface SubProcPageData {
+  readonly hero:  SpecHeroData
+  readonly facts: ReadonlyArray<SpecFact>
+  readonly intro: SpecIntroData
+  readonly why:   SpecWhyData
+  readonly faq:   SpecFaqData
+}
