@@ -12,11 +12,51 @@
   --color-white:       #FFFFFF;
   --color-ice:         #F8FAFC;
 
+  /* Form / UI */
+  --color-form-blue:       #097BB4;
+  --color-form-blue-tint:  #EAF4FB;
+  --color-form-blue-deep:  #054E78;
+  --color-form-blue-hover: #0869A0;
+
+  /* Feedback states */
+  --color-success-bg:  #E1F5EE;
+  --color-success-fg:  #0F6E56;
+  --color-warning-bg:  #FBF4E6;
+
+  /* Brand channels */
+  --color-whatsapp:       #25D366;
+  --color-whatsapp-hover: #21BA5A;
+
+  /* Inputs */
+  --color-placeholder: #B0B0B8;
+
   --font-display: 'Rethink Sans', sans-serif;
   --font-body:    'Nunito Sans', sans-serif;
 
   --radius-btn:  50px;
   --radius-card: 12px;
+}
+
+:root {
+  /* Alpha variants — outside @theme because Tailwind v4 @theme does not support rgba() */
+  --color-form-blue-a08: rgba(9, 123, 180, 0.08);
+  --color-form-blue-a15: rgba(9, 123, 180, 0.15);
+
+  /* ── Sombras navy (sistema base) ── */
+  --shadow-card-rest:     0px 1px 3px 0px rgba(15, 28, 63, 0.08);
+  --shadow-elevated:      0 2px 16px rgba(15, 28, 63, 0.10);
+  --shadow-dropdown:      0 8px 24px rgba(15, 28, 63, 0.10);
+  --shadow-card-hover:    0px 4px 12px 0px rgba(15, 28, 63, 0.12);
+  --shadow-card-hover-lg: 0 8px 32px rgba(15, 28, 63, 0.12);
+
+  /* ── Sombras blue-action (CTA) ── */
+  --shadow-cta-halo:    0px 4px 16px 0px rgba(29, 86, 196, 0.20);
+  --shadow-cta-btn:     0px 4px 12px 0px rgba(29, 86, 196, 0.30);
+  --shadow-float-panel: 0px 2px 8px 0px rgba(0,0,0,0.2), 0px 8px 32px 0px rgba(29, 86, 196, 0.40);
+
+  /* ── Sombras gold ── */
+  --shadow-gold-btn:   0px 4px 14px 0px rgba(181, 134, 42, 0.28);
+  --shadow-gold-hover: 0px 4px 16px 0px rgba(181, 134, 42, 0.25);
 }
 
 :focus-visible {

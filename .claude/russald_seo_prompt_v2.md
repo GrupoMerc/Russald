@@ -2,6 +2,13 @@
 ## Para Claude for VS Code · Next.js App Router · React · Vercel · Git
 ## Revisado contra Google Search Central, Next.js Docs y Schema.org (2025)
 
+> **REFERENCIA HISTÓRICA** — Este archivo es un prompt de auditoría SEO puntual,
+> no una guía operativa del proyecto. Úsalo para auditorías o como checklist;
+> no como fuente de verdad de convenciones de código.
+>
+> Para el estado actual del proyecto ver [CLAUDE.md](../CLAUDE.md).
+> Nota: este archivo usa `siteConfig` en sus ejemplos; el export real es `SITE`.
+
 ---
 
 ## 🧭 CONTEXTO DEL PROYECTO

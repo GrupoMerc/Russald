@@ -64,28 +64,46 @@ export default function SpecHero({ data }: { data: SpecHeroData }) {
 
 ### Páginas internas — patrón obligatorio
 
-Todas las páginas de especialidad (Weight Loss, Plastic Surgery, etc.) comparten el mismo layout de secciones: SpecHero → SpecFactsStrip → SpecIntro → SpecWhy → SpecProc → EvalFormSection.
+Layout estándar: `SpecHero → SpecFactsStrip → SpecIntro → SpecWhy → [SpecProc] → SpecFaq → EvalFormSection → SpecFloatCta`
+
+`SpecProc` es opcional — incluir solo cuando la página lista procedimientos o técnicas comparables. `SpecFaq` es obligatoria en toda página con sección FAQ visible.
 
 ```
 components/sections/spec/
   SpecHero.tsx          ← template genérico, acepta SpecHeroData
   SpecFactsStrip.tsx    ← template genérico, acepta SpecFactData[]
   SpecIntro.tsx         ← template genérico, acepta SpecIntroData
-  SpecWhy.tsx           ← template genérico, acepta SpecWhyItem[]
-  SpecProc.tsx          ← template genérico, acepta SpecProcItem[]
+  SpecWhy.tsx           ← template genérico, acepta SpecWhyData
+  SpecProc.tsx          ← template genérico, acepta SpecProcData (opcional)
+  SpecFaq.tsx           ← template genérico, acepta SpecFaqData
   SpecFloatCta.tsx      ← reutilizable sin props
 
 lib/pages/
-  weightLoss.ts         ← export const wlsData: SpecPageData
-  plasticSurgery.ts     ← export const plasticData: SpecPageData
-  hairRestoration.ts    ← export const hairData: SpecPageData
+  weightLoss.ts         ← datos de la página hub /weight-loss
+  plasticSurgery.ts     ← datos de la página hub /plastic-surgery
+  ...
+  procedures/           ← datos de sub-procedimientos (sub-rutas)
+    weightLoss.ts       ← miniBypassData, gastricSleeveData, etc.
+    plasticSurgery.ts
+    ...
 
 app/
-  weight-loss/page.tsx  ← import { wlsData } + templates = 15 líneas
-  plastic-surgery/page.tsx
+  weight-loss/page.tsx              ← import { wlsData } de lib/pages/weightLoss
+  weight-loss/mini-gastric-bypass/  ← import { miniBypassData } de lib/pages/procedures/weightLoss
 ```
 
 **Beneficio:** una segunda página interna se crea en < 1 hora. Un cambio de estilo se aplica en todas a la vez.
+
+### Variantes visuales — prop `variant`
+
+Todos los componentes `spec/` y `EvalFormSection` aceptan `variant?: 'default' | 'pv1'`.
+
+| Variante | Cuándo usar | Contexto visual |
+|---|---|---|
+| `'default'` | Páginas hub de especialidad (`/weight-loss`, `/plastic-surgery`) | Fondo azul, acentos oscuros |
+| `'pv1'` | Sub-procedimientos (`/weight-loss/mini-gastric-bypass`, etc.) | Fondo blanco/ice, card elevada |
+
+Regla: pasar `variant="pv1"` a **todos** los componentes de la página — nunca mezclar variantes dentro de la misma página.
 
 ---
 
@@ -276,20 +294,22 @@ export const metadata: Metadata = {
 }
 ```
 
-### 9b. JSON-LD — 3 scripts obligatorios en toda página de especialidad
+### 9b. JSON-LD — 4 scripts obligatorios en toda página de especialidad y sub-procedimiento
 
-Cada `page.tsx` de especialidad debe incluir **los 3 scripts**:
+Cada `page.tsx` debe incluir **los 4 scripts** via el componente `JsonLd`:
 
 ```tsx
-import { procedureSchema, breadcrumbSchema, medicalWebPageSchema } from '@/lib/schema'
+import { procedureSchema, breadcrumbSchema, medicalWebPageSchema, faqSchema } from '@/lib/schema'
+import { JsonLd } from '@/components/JsonLd'
+import { SITE }  from '@/config/site'
 
 // 1. MedicalProcedure
 const jsonLd = procedureSchema('Weight Loss Surgery', pageData.intro.paragraphs[0], '/weight-loss')
 
 // 2. BreadcrumbList — mejora navegación en Google y citas en AI
 const breadcrumbs = breadcrumbSchema([
-  { name: 'Home',                url: 'https://russaldmedical.com' },
-  { name: 'Weight Loss Surgery', url: 'https://russaldmedical.com/weight-loss' },
+  { name: 'Home',                url: SITE.url },
+  { name: 'Weight Loss Surgery', url: `${SITE.url}/weight-loss` },
 ])
 
 // 3. MedicalWebPage — señal de revisión médica para E-E-A-T y AI
@@ -300,36 +320,44 @@ const webPage = medicalWebPageSchema({
   specialty:   'Bariatric Surgery',  // e.g. 'Plastic Surgery', 'Hair Restoration'
 })
 
+// 4. FAQPage — rich result soportado por Google; solo si hay FAQ visible en la página
+const faqLd = faqSchema(pageData.faq.items)
+
 // En el JSX — nunca en layout.tsx, siempre en page.tsx
-<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
-<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPage) }} />
+<JsonLd data={jsonLd      as Record<string, unknown>} />
+<JsonLd data={breadcrumbs as Record<string, unknown>} />
+<JsonLd data={webPage     as Record<string, unknown>} />
+<JsonLd data={faqLd       as Record<string, unknown>} />
 ```
+
+`JsonLd` vive en `components/JsonLd.tsx` y escapa `<` para prevenir XSS.
 
 ### 9c. Funciones disponibles en `lib/schema.ts`
 
 | Función | Cuándo usar |
 |---|---|
 | `organizationSchema()` | Solo en `layout.tsx` — global, una vez |
-| `procedureSchema(name, desc, path)` | En toda página de especialidad (weight-loss, plastic-surgery…) |
+| `procedureSchema(name, desc, path)` | En toda página de especialidad y sub-procedimiento |
 | `breadcrumbSchema(crumbs[])` | En toda página de especialidad y sub-procedimiento |
 | `medicalWebPageSchema(params)` | En toda página de especialidad — E-E-A-T + AI citation |
+| `faqSchema(items[])` | En toda página con sección FAQ visible en el HTML |
 | `contactPageSchema()` | Solo en `/free-evaluation/page.tsx` |
 
-### 9d. GEO — pendientes antes de producción real
+### 9d. GEO — datos en `src/config/site.ts`
 
-Los siguientes campos están comentados en `organizationSchema()` — completar con datos del Google Business Profile:
+Coordenadas, dirección y horarios ya están definidos en `SITE`. Los schemas los leen directamente — no hay TODOs pendientes en este frente.
 
 ```ts
-// TODO en lib/schema.ts:
-geo: { '@type': 'GeoCoordinates', latitude: '32.XXXX', longitude: '-117.XXXX' }
-address.streetAddress: 'Ave. [dirección exacta]'
-address.postalCode: '220XX'
-openingHoursSpecification: [{ dayOfWeek: [...], opens: '09:00', closes: '18:00' }]
+// src/config/site.ts — valores actuales
+geo:     { latitude: 32.5027, longitude: -117.0038 }
+address: { street: 'Agua Caliente Blvd 4558, Grand Medical Tower', postalCode: '22014', ... }
+openingHours: [{ dayOfWeek: ['Monday'...'Saturday'], opens: '09:00', closes: '20:00' }]
+```
 
-// TODO en app/layout.tsx:
-<meta name="geo.position" content="32.XXXX;-117.XXXX" />
-<meta name="ICBM" content="32.XXXX, -117.XXXX" />
+Pendiente: agregar geo meta tags en `app/layout.tsx` cuando se confirme el GBP:
+```html
+<meta name="geo.position" content="32.5027;-117.0038" />
+<meta name="ICBM" content="32.5027, -117.0038" />
 ```
 
 ### 9e. AI / LLM Optimization (Generative Engine Optimization)
@@ -374,17 +402,29 @@ Para que ChatGPT, Perplexity y Google AI Overviews citen a Russald:
 ```
 src/
 ├── styles/
-│   └── globals.css              ← tokens @theme + clases de gradient
+│   └── globals.css              ← fuente de verdad de tokens (ver sección 12)
+├── config/
+│   └── site.ts                  ← fuente de verdad de marca / NAP (ver sección 12b)
 ├── types/
 │   └── spec.ts                  ← interfaces SpecHeroData, SpecPageData, etc.
 ├── lib/
-│   ├── config.ts                ← env vars (ZAPIER_WEBHOOK_URL, LEADS_ENABLED)
-│   ├── schema.ts                ← JSON-LD: organizationSchema, medicalProcedureSchema
+│   ├── config.ts                ← env vars (LEADS_ENABLED)
+│   ├── schema.ts                ← JSON-LD helpers (ver sección 9c)
 │   ├── altText.ts               ← alt texts tipados — nunca strings inline en JSX
-│   └── pages/                   ← datos de contenido por página
+│   └── pages/                   ← datos de páginas hub de especialidad
 │       ├── weightLoss.ts
 │       ├── plasticSurgery.ts
-│       └── hairRestoration.ts
+│       ├── hairRestoration.ts
+│       ├── mensHealth.ts
+│       ├── vascularCare.ts
+│       ├── bioOptimization.ts
+│       └── procedures/          ← datos de sub-procedimientos (sub-rutas)
+│           ├── weightLoss.ts
+│           ├── plasticSurgery.ts
+│           ├── hairRestoration.ts
+│           ├── mensHealth.ts
+│           ├── vascularCare.ts
+│           └── bioOptimization.ts
 ├── components/
 │   ├── ui/                      ← átomos sin lógica de negocio
 │   │   ├── Button.tsx
@@ -397,12 +437,13 @@ src/
 │   │   └── Footer.tsx
 │   ├── sections/
 │   │   ├── spec/                ← templates reutilizables para páginas internas
-│   │   │   ├── SpecHero.tsx         (refactor de WlsHero)
-│   │   │   ├── SpecFactsStrip.tsx   (refactor de WlsFactsStrip)
-│   │   │   ├── SpecIntro.tsx        (refactor de WlsIntro)
-│   │   │   ├── SpecWhy.tsx          (refactor de WlsWhy)
-│   │   │   ├── SpecProc.tsx         (refactor de WlsProc)
-│   │   │   └── SpecFloatCta.tsx     (refactor de WlsFloatCta)
+│   │   │   ├── SpecHero.tsx
+│   │   │   ├── SpecFactsStrip.tsx
+│   │   │   ├── SpecIntro.tsx
+│   │   │   ├── SpecWhy.tsx
+│   │   │   ├── SpecProc.tsx
+│   │   │   ├── SpecFaq.tsx
+│   │   │   └── SpecFloatCta.tsx
 │   │   ├── HomeHero.tsx         ← secciones únicas de Home
 │   │   ├── HomeWho.tsx
 │   │   ├── HomeWhy.tsx
@@ -413,6 +454,7 @@ src/
 │   │   ├── HomeJourney.tsx
 │   │   ├── HomeProcedures.tsx
 │   │   └── EvalFormSection.tsx  ← compartida entre Home y páginas internas
+│   ├── JsonLd.tsx               ← helper para inyectar JSON-LD con escape XSS
 │   ├── EvaluationForm.tsx       ← lógica del formulario 2 pasos ('use client')
 │   └── SpecFloatCta.tsx         ← widget flotante ('use client')
 └── app/
@@ -429,13 +471,15 @@ src/
 
 ---
 
-## 12. Tokens del Figma
+## 12. Tokens — `src/styles/globals.css` es la fuente de verdad
+
+Los valores abajo son referencia rápida. Ante cualquier duda, leer `globals.css` directamente — ese archivo manda.
 
 ```css
 /* globals.css @theme */
 --color-navy:        #0F1C3F;
 --color-charcoal:    #0F172A;
---color-blue:        #1D56C4;
+--color-blue:        #3089E2;
 --color-blue-action: #2563EB;
 --color-blue-light:  #93C5FD;
 --color-gold:        #B5862A;
@@ -448,6 +492,25 @@ src/
 --radius-btn:        50px;
 --radius-card:       12px;
 ```
+
+## 12b. Marca / NAP — `src/config/site.ts` es la fuente de verdad
+
+Exporta `SITE` (no `siteConfig`). Toda referencia a nombre, teléfono, dirección, redes sociales o URL de producción debe importar de aquí — nunca hardcodear en componentes, schema ni metadata.
+
+```ts
+import { SITE } from '@/config/site'
+
+SITE.name          // 'Russald Medical Center'
+SITE.url           // proceso de env o 'https://russaldmedical.com'
+SITE.phones        // ['+526649069268', '+18582644121'] — formato E.164
+SITE.phoneLinks    // [{ href, label }] — formato display para UI
+SITE.address       // NAP exacto — debe ser idéntico al footer visible y al GBP
+SITE.geo           // { latitude: 32.5027, longitude: -117.0038 }
+SITE.social        // { facebook, instagram, youtube, tiktok }
+SITE.og            // { image, imageAlt, width, height }
+```
+
+Si un dato de marca no está en `site.ts` → agregarlo ahí primero, luego importarlo.
 
 ---
 
@@ -491,6 +554,7 @@ src/
 | Spec-Intro | sections/spec/SpecIntro.tsx | `2143:291` | `2284:902` | `2169:61` |
 | Spec-Why | sections/spec/SpecWhy.tsx | `2143:325` | `2208:483` | `2169:93` |
 | Spec-Proc | sections/spec/SpecProc.tsx | `2143:358` | `2208:517` | `2169:130` |
+| Spec-Faq | sections/spec/SpecFaq.tsx | TBD | TBD | TBD |
 | Spec-Float-CTA | SpecFloatCta.tsx | `2143:414` | `2216:550` | `2144:385` |
 
 ---
