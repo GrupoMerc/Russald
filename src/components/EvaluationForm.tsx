@@ -68,6 +68,46 @@ const CONDITIONS = [
   { value: 'none',                  label: 'None of the above' },
 ] as const
 
+// ── Specialty map (CRM) ───────────────────────────────────────────────────────
+const SPECIALTY_MAP: Record<string, string> = {
+  'Gastric Sleeve':              'Weight Loss Surgery',
+  'Gastric Bypass':              'Weight Loss Surgery',
+  'Mini Gastric Bypass':         'Weight Loss Surgery',
+  'Lap-Band':                    'Weight Loss Surgery',
+  'Bariatric Revision':          'Weight Loss Surgery',
+  'Mommy Makeover':              'Plastic Surgery',
+  'Tummy Tuck':                  'Plastic Surgery',
+  'Liposuction':                 'Plastic Surgery',
+  'Brazilian Butt Lift (BBL)':   'Plastic Surgery',
+  'Breast Augmentation':         'Plastic Surgery',
+  'Rhinoplasty':                 'Plastic Surgery',
+  'Facelift':                    'Plastic Surgery',
+  'Arm Lift':                    'Plastic Surgery',
+  'Thigh Lift':                  'Plastic Surgery',
+  'Male Enhancement Implant':    "Men's Health",
+  'Knee Replacement':            'Orthopedics',
+  'Hip Replacement':             'Orthopedics',
+  'ACL Repair':                  'Orthopedics',
+  'Spine Surgery':               'Orthopedics',
+  'Wound Washout':               'Vascular',
+  'Erectile Dysfunction':        "Men's Health",
+  'Testosterone Therapy (TRT)':  "Men's Health",
+  'EVLA Vein Treatment':         'Vascular',
+  'Sclerotherapy':               'Vascular',
+  'BHRT':                        'Bio-Optimization',
+  'HGH Therapy (Norditropin)':   'Bio-Optimization',
+  'Bio Optimization Protocol':   'Bio-Optimization',
+  'NAD IV':                      'Bio-Optimization',
+  'Myers Cocktail IV':           'Bio-Optimization',
+  'Glutathione IV':              'Bio-Optimization',
+  'Anti-Aging IV':               'Bio-Optimization',
+  'PRP Facial':                  'Skin & Regenerative',
+  'P-Shot PRP':                  "Men's Health",
+  'PRP Joint Therapy':           'Orthopedics',
+  'Microneedling':               'Skin & Regenerative',
+  'Botox':                       'Skin & Regenerative',
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function parseProcValue(v: string): { label: string; type: ProcType } {
   const idx = v.lastIndexOf('|')
@@ -81,7 +121,7 @@ function parseProcValue(v: string): { label: string; type: ProcType } {
 const CARD  = 'w-full overflow-hidden rounded-[16px] bg-[var(--color-white)] shadow-[0_2px_24px_rgba(15,28,63,.08),0_1px_4px_rgba(15,28,63,.04)]'
 const LBL   = "mb-[6px] block font-['Nunito_Sans',sans-serif] text-[0.65625rem] font-bold uppercase tracking-[0.12em] text-[#097BB4]"
 const LSEC  = "border-t border-[var(--color-border)] pt-4 font-['Nunito_Sans',sans-serif] text-[0.625rem] font-bold uppercase tracking-[0.12em] text-[var(--color-muted)]"
-const SBTN  = "mt-1 flex min-h-[48px] w-full items-center justify-center rounded-[8px] bg-[#097BB4] font-['Nunito_Sans',sans-serif] text-[0.9375rem] font-bold tracking-[0.01em] text-white transition-colors hover:bg-[#0869A0] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)] disabled:opacity-60"
+const SBTN  = "btn-form-primary mt-1 flex min-h-[48px] w-full cursor-pointer items-center justify-center rounded-[8px] bg-[#097BB4] font-['Nunito_Sans',sans-serif] text-[0.9375rem] font-bold tracking-[0.01em] text-white transition-colors focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue-action)] disabled:opacity-60"
 const LEGAL = "text-center font-['Nunito_Sans',sans-serif] text-[0.6875rem] leading-[1.6] text-[var(--color-muted)]"
 const CHEVRON_BG = { backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }
 
@@ -241,6 +281,7 @@ export default function EvaluationForm({ defaultProcedure = '', showHeader = fal
         step: 1,
         firstName, lastName, email, phone,
         procedure: procLabel, procType,
+        specialty: SPECIALTY_MAP[procLabel] ?? '',
         country, state, otherCountry, contactTime, notes,
       }),
     })
